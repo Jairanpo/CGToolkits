@@ -1,0 +1,31 @@
+import sys
+import os
+
+env = 'pro'
+
+paths = {
+    'dev': 'C:\\Users\\OOL64\\Documents\\GitHub\\CGToolkits',
+    'pro': 'S:\\TOOLKITS'
+}
+
+path = paths['dev'] if env == 'dev' else paths['pro']
+
+if path in sys.path:
+    print('Envar variable was already added')
+else:
+    print('Envar variable added')
+    sys.path.append(path)
+
+# ___________________________     Execution     ___________________________________
+
+# Redshift Toolkit execution:
+import lighting.redshift.toolkit as rs
+rs.GUI().show_dialog()
+
+# Previs Toolkit execution:
+import previs.toolkit as pvs
+pvs.GUI().show_dialog()
+
+# Standalone Alembic Manager Toolkit execution:
+import cache.alembic.toolkit as abc
+abc.GUI().show_dialog()

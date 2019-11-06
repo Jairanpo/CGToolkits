@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/__init__.py" line="300" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8656512d-2322-47f2-aba1-a1d7f2d77e9c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/alembic/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/export/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/export/alembic.py" beforeDir="false" afterPath="$PROJECT_DIR$/alembic/alembic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/export/camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/alembic/camera.py" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/alembic/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="446">
+              <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>layoutWindows</find>
+      <find>playblast_window</find>
+      <find>non</find>
+      <find>pm.setAttr(camera + &quot;.</find>
+      <find>create_playblast_cam</find>
+      <find>playblast</find>
+      <find>storyboardWindow_BTN</find>
+      <find>storyboard_window</find>
+      <find>create</find>
+      <find>createPanel</find>
+      <find>Previs_</find>
+      <find>previs_panel</find>
+      <find>GUI</find>
+      <find>QtUI</find>
+      <find>__init__.ca</find>
+      <find>__init__.transformationOperations.align</find>
+      <find>create_widgets</find>
+      <find>edit_widgets</find>
+      <find>work_TAB</find>
+      <find>export_path_FDL</find>
+      <find>v_create_LYT</find>
+      <find>edit_LYT</find>
+      <find>setup_widgets</find>
+      <find>export_page_WGT</find>
+      <find>ID_TBL</find>
+      <find>on_chan</find>
+      <find>set</find>
+      <find>shot_table_export_item</find>
+      <find>strategy_checkbox_item</find>
+      <find>export_ITM</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>new_name</replace>
+      <replace>shotNomenclature_LNE</replace>
+      <replace>shotProjectRename_LNE</replace>
+      <replace>shotProjectRename_BTN</replace>
+      <replace>shotNomenclatureRename_LNE</replace>
+      <replace>shotNomenclatureRename_BTN</replace>
+      <replace>playblastShot_BTN</replace>
+      <replace>close_BTN</replace>
+      <replace>sceneManagement_LYT</replace>
+      <replace>right_LYT</replace>
+      <replace>closeButton_LYT</replace>
+      <replace>OolQGroupBox</replace>
+      <replace>utilities</replace>
+      <replace>previs_panel</replace>
+      <replace>create_previs_cam</replace>
+      <replace>camera.setAttr(&quot;</replace>
+      <replace>storyboardPanel_BTN</replace>
+      <replace>storyboard_panel</replace>
+      <replace>previs_window</replace>
+      <replace>UI</replace>
+      <replace>edit_widgets</replace>
+      <replace>setup_widgets</replace>
+      <replace>previs_TAB</replace>
+      <replace>export_path_LNE</replace>
+      <replace>v_edit_LYT</replace>
+      <replace>create_widgets</replace>
+      <replace>shots_TBL</replace>
+      <replace>export_ITM</replace>
+      <replace>zero_checkbox_ITM</replace>
+      <replace>alembic_ITM</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/groups.py" />
+        <option value="$PROJECT_DIR$/oolShots.py" />
+        <option value="$PROJECT_DIR$/previsOrganization.py" />
+        <option value="$PROJECT_DIR$/simpleCameraRig.py" />
+        <option value="$PROJECT_DIR$/rename_shot.py" />
+        <option value="$PROJECT_DIR$/moveShots/__init__.py" />
+        <option value="$PROJECT_DIR$/previsOrganization.py" />
+        <option value="$PROJECT_DIR$/sceneCleanup/__init__.py" />
+        <option value="$PROJECT_DIR$/createShot/__init__.py" />
+        <option value="$PROJECT_DIR$/createShot/sequencerShot.py" />
+        <option value="$PROJECT_DIR$/utilities/alignObjects.py" />
+        <option value="$PROJECT_DIR$/utilities/goToCamera.py" />
+        <option value="$PROJECT_DIR$/utilities/cameraOperations.py" />
+        <option value="$PROJECT_DIR$/utilities/transformationOperations.py" />
+        <option value="$PROJECT_DIR$/utilities/__init__.py" />
+        <option value="$PROJECT_DIR$/panels/playblastWindow.py" />
+        <option value="$PROJECT_DIR$/panels/playblastPanel.py" />
+        <option value="$PROJECT_DIR$/utilities/headsUpDisplay.py" />
+        <option value="$PROJECT_DIR$/panels/storyboardPanel.py" />
+        <option value="$PROJECT_DIR$/panels/_init_.py" />
+        <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/testpy.py" />
+        <option value="$PROJECT_DIR$/panels/previs.py" />
+        <option value="$PROJECT_DIR$/panels/utilities.py" />
+        <option value="$PROJECT_DIR$/panels/storyboardWindow.py" />
+        <option value="$PROJECT_DIR$/panels/__init__.py" />
+        <option value="$PROJECT_DIR$/panels/storyboard.py" />
+        <option value="$PROJECT_DIR$/panels/layoutWindows.py" />
+        <option value="$PROJECT_DIR$/panels/playblast.py" />
+        <option value="$PROJECT_DIR$/createShot/simpleCameraRig.py" />
+        <option value="$PROJECT_DIR$/playblast/__init__.py" />
+        <option value="$PROJECT_DIR$/sceneGrouping/__init__.py" />
+        <option value="$PROJECT_DIR$/editShots/__init__.py" />
+        <option value="$PROJECT_DIR$/header.py" />
+        <option value="$PROJECT_DIR$/header.py" />
+        <option value="$PROJECT_DIR$/previsToolkit.py" />
+        <option value="$PROJECT_DIR$/export/camera.py" />
+        <option value="$PROJECT_DIR$/camOps/__init__.py" />
+        <option value="$PROJECT_DIR$/save_to_publish/__init__.py" />
+        <option value="$PROJECT_DIR$/export/alembic.py" />
+        <option value="$PROJECT_DIR$/export/__init__.py" />
+        <option value="$PROJECT_DIR$/__init__.py" />
+        <option value="$PROJECT_DIR$/alembic/__init__.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-1431" />
+    <option name="width" value="1396" />
+    <option name="height" value="1156" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="previsToolkit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="previsToolkit" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="previsToolkit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="previsToolkit" type="462c0819:PsiDirectoryNode" />
+              <item name="alembic" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\OOL64\Documents\GitHub\previsToolkit\createShot" />
+      <recent name="C:\Users\OOL64\Documents\GitHub\previsToolkit\editShots" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\OOL64\Documents\GitHub\previsToolkit" />
+      <recent name="C:\Users\OOL64\Documents\GitHub\previsToolkit\panels" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8656512d-2322-47f2-aba1-a1d7f2d77e9c" name="Default Changelist" comment="" />
+      <created>1558973525185</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1558973525185</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-1431" y="0" width="1396" height="1156" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15088758" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32903865" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16227607" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32979852" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../exportSceneShot/header.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="5" lean-forward="true" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/previsOrganization.py" />
+    <entry file="file://$PROJECT_DIR$/panels/layoutWindowTest.py" />
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitattributes">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py" />
+    <entry file="file://$PROJECT_DIR$/sceneCleanup/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="26" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testpy.py" />
+    <entry file="file://C:/Toolkits/Maya/previsToolkit/copy_to_maya.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/panels/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/panels/layoutWindows.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" selection-start-line="3" selection-end-line="10" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/panels/storyboard.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/playblast/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1620">
+          <caret line="108" column="98" selection-start-line="108" selection-start-column="98" selection-end-line="108" selection-end-column="98" />
+          <folding>
+            <element signature="e#24#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/createShot/simpleCameraRig.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="51" lean-forward="true" selection-start-line="27" selection-start-column="51" selection-end-line="27" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/createShot/sequencerShot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sceneGrouping/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="61" selection-start-line="7" selection-start-column="61" selection-end-line="7" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/camOps/transformationOperations.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="61" lean-forward="true" selection-start-line="8" selection-start-column="61" selection-end-line="8" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/camOps/cameraOperations.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/panels/playblast.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-131">
+          <caret line="28" column="45" selection-start-line="28" selection-start-column="45" selection-end-line="28" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/moveShots/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="27" column="15" selection-start-line="27" selection-start-column="15" selection-end-line="27" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/camOps/headsUpDisplay.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="80" selection-start-line="6" selection-start-column="80" selection-end-line="7" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://S:/SCRIPTS/Maya/Utilities/saveRelativeTimeIncremental/saveRelativeTimeIncremental.py" />
+    <entry file="file://$PROJECT_DIR$/alembic/camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="23" lean-forward="true" selection-start-column="23" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/createShot/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/camOps/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="31" selection-start-line="1" selection-start-column="31" selection-end-line="1" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/editShots/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/save_to_publish/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="13" lean-forward="true" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <folding>
+            <element signature="e#46#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/header.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="33" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="884">
+          <caret line="128" lean-forward="true" selection-start-line="128" selection-end-line="128" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#661#746#0" />
+            <element signature="e#1010#2020#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alembic/alembic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="50" column="40" selection-end-line="75" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alembic/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

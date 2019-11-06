@@ -1,0 +1,21 @@
+import sys
+
+env = 'pro'
+paths = {
+'dev': 'C:\\Users\\OOL64\\Documents\\GitHub\\lightingToolkits',
+'pro': 'S:\\TOOLKITS\\Maya\\lightingToolkits'
+}
+
+path = paths['dev'] if env ==  'dev' else paths['pro']
+
+if env == 'dev':path = paths['dev']
+elif env == 'pro':path = paths['pro']
+else:print('Unspecified path')
+
+if path in sys.path: pass
+else:sys.path.append(path)
+
+import redshift
+reload(redshift)
+
+redshift.toolkit.GUI().show_dialog()
