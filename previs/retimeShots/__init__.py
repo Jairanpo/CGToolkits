@@ -7,7 +7,7 @@ class ShotRetimer():
 
     @property
     def shots(self):
-        return pm.ls(type="shot")
+        return pm.sequenceManager(listShots=True)
 
     @property
     def animation_curves(self):
@@ -59,24 +59,30 @@ class ShotRetimer():
     @property
     def first_frame(self):
         _anim_curves = pm.ls(type="animCurve")
-        result = _anim_curves[0].getTime(0)
+        result = None
 
-        for curve in _anim_curves:
-            if curve.getTime(0) < result:
-                result = curve.getTime(0)
+        if len(_anim_curves) > 0:
+            result = _anim_curves[0].getTime(0)
+            for curve in _anim_curves:
+                if curve.getTime(0) < result:
+                    result = curve.getTime(0)
+        else:
+            result = "No keyframes in scene"
 
         return result
 
     @property
     def last_frame(self):
-        self.shots = pm.ls(type="shot")
         _anim_curves = pm.ls(type="animCurve")
-        result = _anim_curves[0].getTime(_anim_curves[0].numKeys() - 1)
-        print(result)
-        for curve in _anim_curves:
-            _num_keys_index_total = curve.numKeys() - 1
-            if curve.getTime(_num_keys_index_total) > result:
-                result = curve.getTime(_num_keys_index_total)
+        result = None
+        if len(_anim_curves) > 0:
+            result = _anim_curves[0].getTime(_anim_curves[0].numKeys() - 1)
+            for curve in _anim_curves:
+                _num_keys_index_total = curve.numKeys() - 1
+                if curve.getTime(_num_keys_index_total) > result:
+                    result = curve.getTime(_num_keys_index_total)
+        else:
+            result = "No keyframes in scene"
 
         return result
 
@@ -96,25 +102,25 @@ class ShotRetimer():
 
         if len(shot) == 1 and amount != 0:
             shot = shot[0]
-            _shots_to_move = self.get_shots_ahead(
-                shot) if amount > 0 else self.get_shots_behind(shot)
+            _shots_to_move = None
 
-            for each_shot in _shots_to_move[::-1]:
-                each_shot.sequenceStartFrame.set(
-                    each_shot.sequenceStartFrame.get() + amount)
-                each_shot.sequenceEndFrame.set(
-                    each_shot.sequenceEndFrame.get() + amount)
-                each_shot.startFrame.set(
-                    each_shot.startFrame.get() + amount)
-                each_shot.endFrame.set(
-                    each_shot.endFrame.get() + amount)
+            if amount > 0:
+                _shots_to_move = self.get_shots_ahead(shot)
+            else:
+                _shots_to_move = self.get_shots_behind(shot)
+
+            # self.enrich_shot_data(_shots_to_move, amount)
+            # self.move_shot_sequencer(each_shot, amount)
+
+        '''
             result["status"] = "success"
             result["message"] = "Shots moved by {0} frames.".format(amount)
         else:
             result["status"] = "warning"
             result["message"] = "You have to select only one shot or your amount to move was 0."
+        '''
 
-        return result
+        return self.enrich_shot_data(_shots_to_move, amount)
 
     def get_shots_ahead(self, current_shot):
         _ordered_shots = pm.sequenceManager(listShots=True)
@@ -133,3 +139,86 @@ class ShotRetimer():
                 _last_index = index
 
         return _ordered_shots[:_last_index + 1]
+
+    def empty_frames(self, shot=None):
+        '''
+
+        Summary:
+            Get empty frames between this shot and the previous and following shots.
+
+        Arguments:
+            - shot: The source shot (default = pm.ls(sl=True, type="shot")[0])
+
+        '''
+        result = {"shot": shot, "before": 0, "after": 0}
+        _shots_in_scene = self.shots
+        _shot_before = None
+        _shot_after = None
+
+        if shot is None:
+            shot = pm.ls(sl=True, type="shot")[0]
+            result["shot"] = shot
+
+        if len(self.get_shots_behind(shot)) > 1:
+            _shot_before = self.get_shots_behind(shot)[-2]
+            result["before"] = abs(
+                shot.getStartTime() - _shot_before.getEndTime())
+        else:
+            result["before"] = None
+        if len(self.get_shots_ahead(shot)) > 1:
+            _shot_after = self.get_shots_ahead(shot)[1]
+            result["after"] = abs(
+                _shot_after.getStartTime() - shot.getEndTime())
+        else:
+            result["after"] = None
+
+        return result
+
+    def enrich_shot_data(self, list_of_shots, amount=0):
+        '''
+        Summary:
+            This method will create an enriched list with the name of the shot,
+            empty frames before and after
+
+        Arguments:
+            list_of_shots: The list of shots that require or might require to be moved.
+                            The list should enter has a moving precendence hierarch:
+                            - If shots had to move foward, then the they are ordered as lasts to first.
+                            - If shots had to move backward, then they are ordered as first to last.
+
+        Returns:
+            list of shots[
+                {
+                   "shot": Name of the shot,
+                   "before": Amount of empty frames before
+                   "after": Amount of empty frames after
+                   "move": how much frames the shot has to be moved
+                }...
+            ]
+        '''
+        result = []
+
+        for each in list_of_shots:
+            result.append(self.empty_frames(each))
+
+        for index, each in enumerate(result):
+            if index == 0:
+                each["move"] = amount
+                if (each["after"] - amount) > 1:
+                    if index + 1 == len(result):
+                        each["move"] = False
+                    else:
+                        result[index + 1]["move"] = False
+
+        return result
+
+    @staticmethod
+    def move_shot_sequencer(shot, amount):
+        shot.sequenceStartFrame.set(
+            shot.sequenceStartFrame.get() + amount)
+        shot.sequenceEndFrame.set(
+            shot.sequenceEndFrame.get() + amount)
+        shot.startFrame.set(
+            shot.startFrame.get() + amount)
+        shot.endFrame.set(
+            shot.endFrame.get() + amount)
