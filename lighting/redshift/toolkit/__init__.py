@@ -14,8 +14,6 @@ import lighting.redshift.config as config
 import lighting.redshift.rsID as rsID
 import lighting.redshift.rsMatteParams as rsMP
 
-reload(agUI)
-
 __version__ = 'v2.0.0'
 
 
@@ -183,7 +181,7 @@ class GUI(agUI.ToolkitQDialog):
         self.layers_main_V_LYT.addStretch()
 
     def create_agnostics(self):
-        self.console_TED = agUI.ToolkitQConsole()
+        self.console = agUI.ToolkitQConsole()
         self.close_BTN = QtWidgets.QPushButton('Close')
 
         self.footer_H_LYT = QtWidgets.QHBoxLayout()
@@ -199,7 +197,7 @@ class GUI(agUI.ToolkitQDialog):
         self.rs_ID_tab_LYT.addLayout(self.ID_main_V_LYT)
         self.rs_layers_tab_LYT.addLayout(self.layers_main_V_LYT)
 
-        main_LYT.addWidget(self.console_TED)
+        main_LYT.addWidget(self.console)
         main_LYT.addLayout(self.footer_H_LYT)
 
     def create_connections(self):
@@ -275,7 +273,7 @@ class GUI(agUI.ToolkitQDialog):
 
         if not row_id.strip().isdigit():
             new_id = 0
-            self.console_TED.console_log(
+            self.console.log(
                 'You didn\'t provide a valid ID number', 'error')
         else:
             new_id = int(row_id)
@@ -283,7 +281,7 @@ class GUI(agUI.ToolkitQDialog):
         if len(self.ID_TBL.selectedItems()) > 0:
             self.change_selected_cells_id(new_id)
 
-        self.console_TED.console_log('ID changed', 'success')
+        self.console.log('ID changed', 'success')
         self.rs_ids_instance.update_id_map_and_set()
         self.set_change_table_connection(True)
 
@@ -304,9 +302,9 @@ class GUI(agUI.ToolkitQDialog):
 
         if current_id in self.rs_ids_instance.scene_ids:
             self.rs_ids_instance.select_by_ids(current_id)
-            self.console_TED.console_log('Objects selected')
+            self.console.log('Objects selected')
         else:
-            self.console_TED.console_log(
+            self.console.log(
                 'That ID hasn\'t been assigned in the scene yet', 'warning')
 
     def assign_id_to_selected(self):
@@ -320,10 +318,10 @@ class GUI(agUI.ToolkitQDialog):
                 list_of_shapes.append(shape)
 
         if len(list_of_shapes) == 0:
-            self.console_TED.console_log("No objects selected", "warning")
+            self.console.log("No objects selected", "warning")
             return
         self.rs_ids_instance.assign_id(list_of_shapes, id_value)
-        self.console_TED.console_log(
+        self.console.log(
             'ID assigned to selected objects!', 'success')
         self.fill_table()
 
@@ -346,10 +344,10 @@ class GUI(agUI.ToolkitQDialog):
         if len(list_of_nodes) != 0:
             self.rs_matteParams.send_nodes_inside_matteParam(
                 nomenclature, list_of_nodes)
-            self.console_TED.console_log(
+            self.console.log(
                 "Matte param node created with name: \"{}\"".format(nomenclature), "success")
         else:
-            self.console_TED.console_log(
+            self.console.log(
                 "You didn't select any object", "error")
 
     def create_ID_AOVs(self):
@@ -359,10 +357,10 @@ class GUI(agUI.ToolkitQDialog):
             self.rs_ids_instance.create_aovs(
                 stripped_text,
                 self.create_ID_AOV_values_CBX.currentData(QtCore.Qt.UserRole)["values"])
-            self.console_TED.console_log(
+            self.console.log(
                 'ID AOV created with name: \"{}\"'.format(nomenclature), 'success')
         else:
-            self.console_TED.console_log(
+            self.console.log(
                 'Please set a name your ID AOVs', 'warning')
 
     def change_shader_override_type(self, shader_type):
@@ -380,7 +378,7 @@ class GUI(agUI.ToolkitQDialog):
         layer = None
 
         if name == '':
-            self.console_TED.console_log(
+            self.console.log(
                 'You have to provide a valid layer name.', 'error')
             return
 
@@ -395,5 +393,5 @@ class GUI(agUI.ToolkitQDialog):
             layer = layers.create_redshift_shader_override_layer(
                 name, shader_type, list_of_objects=selected, sprite=False)
 
-        self.console_TED.console_log(
+        self.console.log(
             'Shader override layer created: {}_RYR.'.format(name), 'success')

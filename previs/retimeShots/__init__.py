@@ -183,7 +183,7 @@ class ShotRetimer():
         Arguments:
             list_of_shots: The list of shots that require or might require to be moved.
                             The list should enter has a moving precendence hierarch:
-                            - If shots had to move foward, then the they are ordered as lasts to first.
+                            - If shots had to move forward, then the they are ordered as lasts to first.
                             - If shots had to move backward, then they are ordered as first to last.
 
         Returns:
