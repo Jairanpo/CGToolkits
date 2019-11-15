@@ -7,54 +7,30 @@ class ShotRetimer():
 
     @property
     def shots(self):
-        return pm.sequenceManager(listShots=True)
+        result = []
+        _shots = pm.sequenceManager(listShots=True)
+        _start_frame_list = []
+
+        for each in _shots:
+            _start_frame_list.append(each.getStartTime())
+
+        _start_frame_list.sort()
+
+        for start_frame in _start_frame_list:
+            for shot in _shots:
+                if shot.getStartTime() == start_frame:
+                    result.append({"shot": shot})
+                else:
+                    pass
+
+        result = self.empty_frames(result)
+
+        return result
 
     @property
     def animation_curves(self):
         result = pm.ls(type="animCurve")
         return result
-
-    @property
-    def first_shot(self):
-        self.shots = pm.ls(type="shot")
-
-        def _find_first_shot():
-            _shots = self.shots
-            _first_shot = None
-
-            if len(_shots) > 0:
-                _first_shot = _shots[0]
-                _first_frame = _shots[0].getStartTime()
-                for each in _shots:
-                    if each.getStartTime() < _first_frame:
-                        _first_shot = each
-            else:
-                _first_shot = "No first shot in the scene."
-
-            return _first_shot
-
-        return _find_first_shot()
-
-    @property
-    def last_shot(self):
-        self.shots = pm.ls(type="shot")
-
-        def _find_last_shot():
-            _shots = self.shots
-            _last_shot = None
-
-            if len(_shots) > 0:
-                _last_shot = _shots[0]
-                _last_frame = _shots[0].getEndTime()
-                for each in _shots:
-                    if each.getStartTime() > _last_frame:
-                        _last_shot = each
-            else:
-                _last_shot = "No last shot in the scene."
-
-            return _last_shot
-
-        return _find_last_shot()
 
     @property
     def first_frame(self):
@@ -96,51 +72,33 @@ class ShotRetimer():
 
     def move_shots(self, amount):
         result = {"status": "", "message": ""}
-        _first_frame = self.first_frame
-        _last_frame = self.last_frame
-        shot = pm.ls(sl=True, type="shot")
 
-        if len(shot) == 1 and amount != 0:
-            shot = shot[0]
-            _shots_to_move = None
+        _shots_in_scene = self.shots
+        _shots = pm.ls(sl=True, type="shot")
+        _range = ShotRetimer.selected_shots_range_index(
+            _shots, _shots_in_scene)
+        print(_range)
 
-            if amount > 0:
-                _shots_to_move = self.get_shots_ahead(shot)
+        if ShotRetimer.are_overlapping_shots(_shots_in_scene):
+            result["status"] = "error"
+            result["message"] = "You have overlapping shots in the scene."
+            return result
+
+        for i, each in enumerate(_shots_in_scene):
+            if i in _range:
+                each["moveIt"] = amount
             else:
-                _shots_to_move = self.get_shots_behind(shot)
+                each["moveIt"] = 0
 
-            # self.enrich_shot_data(_shots_to_move, amount)
-            # self.move_shot_sequencer(each_shot, amount)
+        for i, each in enumerate(_shots_in_scene):
+            if each["moveIt"] > each["emptyFramesAfter"]:
+                _next_shot = _shots_in_scene[i + 1]
+                _delta = amount - each["emptyFramesAfter"]
+                _next_shot["moveIt"] = 0 if _delta < 1 else _delta
 
-        '''
-            result["status"] = "success"
-            result["message"] = "Shots moved by {0} frames.".format(amount)
-        else:
-            result["status"] = "warning"
-            result["message"] = "You have to select only one shot or your amount to move was 0."
-        '''
+        return _shots_in_scene
 
-        return self.enrich_shot_data(_shots_to_move, amount)
-
-    def get_shots_ahead(self, current_shot):
-        _ordered_shots = pm.sequenceManager(listShots=True)
-        starting_index = None
-        for index, shot in enumerate(_ordered_shots):
-            if current_shot == shot:
-                starting_index = index
-
-        return _ordered_shots[starting_index:]
-
-    def get_shots_behind(self, current_shot):
-        _ordered_shots = pm.sequenceManager(listShots=True)
-        _last_index = None
-        for index, shot in enumerate(_ordered_shots):
-            if current_shot == shot:
-                _last_index = index
-
-        return _ordered_shots[:_last_index + 1]
-
-    def empty_frames(self, shot=None):
+    def empty_frames(self, list_of_shots):
         '''
 
         Summary:
@@ -150,67 +108,50 @@ class ShotRetimer():
             - shot: The source shot (default = pm.ls(sl=True, type="shot")[0])
 
         '''
-        result = {"shot": shot, "before": 0, "after": 0}
-        _shots_in_scene = self.shots
-        _shot_before = None
-        _shot_after = None
-
-        if shot is None:
-            shot = pm.ls(sl=True, type="shot")[0]
-            result["shot"] = shot
-
-        if len(self.get_shots_behind(shot)) > 1:
-            _shot_before = self.get_shots_behind(shot)[-2]
-            result["before"] = abs(
-                shot.getStartTime() - _shot_before.getEndTime())
-        else:
-            result["before"] = None
-        if len(self.get_shots_ahead(shot)) > 1:
-            _shot_after = self.get_shots_ahead(shot)[1]
-            result["after"] = abs(
-                _shot_after.getStartTime() - shot.getEndTime())
-        else:
-            result["after"] = None
-
-        return result
-
-    def enrich_shot_data(self, list_of_shots, amount=0):
-        '''
-        Summary:
-            This method will create an enriched list with the name of the shot,
-            empty frames before and after
-
-        Arguments:
-            list_of_shots: The list of shots that require or might require to be moved.
-                            The list should enter has a moving precendence hierarch:
-                            - If shots had to move forward, then the they are ordered as lasts to first.
-                            - If shots had to move backward, then they are ordered as first to last.
-
-        Returns:
-            list of shots[
-                {
-                   "shot": Name of the shot,
-                   "before": Amount of empty frames before
-                   "after": Amount of empty frames after
-                   "move": how much frames the shot has to be moved
-                }...
-            ]
-        '''
         result = []
 
-        for each in list_of_shots:
-            result.append(self.empty_frames(each))
+        if len(list_of_shots) > 1:
 
-        for index, each in enumerate(result):
-            if index == 0:
-                each["move"] = amount
-                if (each["after"] - amount) > 1:
-                    if index + 1 == len(result):
-                        each["move"] = False
-                    else:
-                        result[index + 1]["move"] = False
+            for i, each in enumerate(list_of_shots):
+
+                if each == list_of_shots[0]:  # If it is the first one
+                    each["emptyFramesBefore"] = "infinite"
+                    each["emptyFramesAfter"] = abs(
+                        list_of_shots[i + 1]["shot"].getStartTime() - each["shot"].getEndTime())
+
+                    each["emptyFramesAfter"] -= 1
+
+                elif each == list_of_shots[-1]:  # If it is the last one
+                    each["emptyFramesAfter"] = "infinite"
+                    each["emptyFramesBefore"] = abs(
+                        list_of_shots[i - 1]["shot"].getEndTime() - each["shot"].getStartTime())
+                    each["emptyFramesBefore"] -= 1
+
+                else:
+                    each["emptyFramesBefore"] = abs(
+                        list_of_shots[i - 1]["shot"].getEndTime() - each["shot"].getStartTime())
+                    each["emptyFramesAfter"] = abs(
+                        list_of_shots[i + 1]["shot"].getStartTime() - each["shot"].getEndTime())
+
+                    each["emptyFramesBefore"] -= 1
+                    each["emptyFramesAfter"] -= 1
+
+                result.append(each)
+
+        else:
+            list_of_shots[0]["emptyFramesAfter"] = "infinite"
+            list_of_shots[0]["emptyFramesBefore"] = "infinite"
+            result = list_of_shots
 
         return result
+
+    @classmethod
+    def are_overlapping_shots(cls, list_of_shots):
+        for shot in list_of_shots:
+            if shot["emptyFramesAfter"] < 0 or shot["emptyFramesBefore"] < 0:
+                return True
+
+        return False
 
     @staticmethod
     def move_shot_sequencer(shot, amount):
@@ -222,3 +163,14 @@ class ShotRetimer():
             shot.startFrame.get() + amount)
         shot.endFrame.set(
             shot.endFrame.get() + amount)
+
+    @classmethod
+    def selected_shots_range_index(cls, selected_shots, list_of_shots):
+        range = []
+        for i, each in enumerate(list_of_shots):
+            for shot in selected_shots:
+                if shot == each["shot"]:
+                    range.append(i)
+
+        range.sort()
+        return range

@@ -3,7 +3,7 @@ import pymel.core as pm
 
 def move_shots(list_of_shots, amount):
     result = {"status": "", "message": ""}
-    if len(list_of_shots) > 0 and amount == 0:
+    if len(list_of_shots) > 0 and amount != 0:
         for each_shot in list_of_shots:
             each_shot.sequenceStartFrame.set(
                 each_shot.sequenceStartFrame.get() + amount)

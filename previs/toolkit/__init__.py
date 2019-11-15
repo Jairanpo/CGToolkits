@@ -310,7 +310,8 @@ class GUI(agUI.ToolkitQDialog):
                 frames = 0 if self.ammountFrames_LNE.text(
                 ) == "" else int(self.ammountFrames_LNE.text())
 
-                result = moveShots.retime_shots(frames)
+                result = moveShots.move_shots(
+                    pm.ls(sl=True, type="shot"), frames)
 
                 self.console.log(result["message"], result["status"])
 
