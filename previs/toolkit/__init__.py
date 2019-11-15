@@ -10,6 +10,7 @@ import pymel.core as pm
 import maya.mel as mel
 
 # Local application imports
+import cache.alembic.toolkit as abcToolkit
 import agnostics.GUI as agUI
 import previs.createShot.simpleCameraRig as simpleCameraRig
 import previs.createShot.sequencerShot as sequencerShot
@@ -19,15 +20,10 @@ import previs.moveShots as moveShots
 import previs.playblast as playblast
 import previs.panels as panels
 
-reload(agUI)
-reload(camOps.cameraOperations)
-reload(camOps.transformationOperations)
-reload(editShots)
-reload(moveShots)
-reload(playblast)
-reload(moveShots)
+reload(abcToolkit)
 
-__version__ = 'v3.0.0'
+
+__version__ = '3.1.0'
 _NAME = "Previs Toolkit"
 
 
@@ -78,6 +74,7 @@ class GUI(agUI.ToolkitQDialog):
         self.V_root_window_LYT = QtWidgets.QVBoxLayout(self)
         self.H_root_main_LYT = QtWidgets.QHBoxLayout()
         self.V_root_window_LYT.addLayout(self.H_root_main_LYT)
+        self.console = agUI.ToolkitQConsole()
 
         self._set_tabs()
         self._set_shot_creation_group()
@@ -102,18 +99,13 @@ class GUI(agUI.ToolkitQDialog):
             self.previs_TAB = agUI.ToolkitQTab()
 
             self.work_tab_WGT = QtWidgets.QWidget()
-            self.export_tab_WGT = QtWidgets.QWidget()
 
             self.previs_TAB.addTab(self.work_tab_WGT, "Work")
-            self.previs_TAB.addTab(self.export_tab_WGT, "Export")
 
         def _layouts():
             _H_LYT = QtWidgets.QHBoxLayout()
             self.work_tab_LYT = QtWidgets.QVBoxLayout()
             self.work_tab_WGT.setLayout(self.work_tab_LYT)
-
-            self.export_tab_LYT = QtWidgets.QVBoxLayout()
-            self.export_tab_WGT.setLayout(self.export_tab_LYT)
 
             _H_LYT.addWidget(self.previs_TAB)
             self.H_root_tab_LYT = _H_LYT
@@ -451,7 +443,7 @@ class GUI(agUI.ToolkitQDialog):
         self.H_root_console_LYT = None
 
         def _widgets():
-            self.console = agUI.ToolkitQConsole()
+            pass
 
         def _layouts():
             _H_LYT = QtWidgets.QHBoxLayout()

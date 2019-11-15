@@ -26,13 +26,14 @@ def export(metadata):
     else:
         _filename = "{0}_{1}_{2}".format(metadata["shot"], metadata["filename"], metadata["version"])
 
-    _filepath = os.path.join(metadata["path"], metadata["subfolder"])
-
+    _filepath = os.path.join(metadata["path"], metadata["subfolder"], metadata["version"]) 
+    
     if not os.path.exists(_filepath):
-        os.mkdir(_filepath)
+        os.makedirs(_filepath)
         _filepath = os.path.join(_filepath, _filename)
     else:
         _filepath = os.path.join(_filepath, _filename)
+        
 
     _filepath = os.path.normpath(_filepath)
 

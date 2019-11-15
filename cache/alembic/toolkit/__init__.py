@@ -32,7 +32,6 @@ def maya_main_window():
 
 class GUI(agUI.ToolkitQDialog):
     GUI_instance = None
-    _SHOTS_DATA = []
     @classmethod
     def show_dialog(cls):
         if not cls.GUI_instance:
@@ -43,8 +42,9 @@ class GUI(agUI.ToolkitQDialog):
             cls.GUI_instance.raise_()
             cls.GUI_instance.activateWindow()
 
-    def __init__(self, parent=maya_main_window()):
+    def __init__(self, parent=maya_main_window(), standalone=True):
         super(GUI, self).__init__(parent)
+        self._SHOTS_DATA = []
         self.setWindowFlags(
             self.windowFlags() ^
             QtCore.Qt.WindowContextHelpButtonHint)
@@ -63,26 +63,46 @@ class GUI(agUI.ToolkitQDialog):
         self.setLayout(self.root_window_LYT)
 
     # ---------------------------------------------------------------------------
-        self._set_title()
-        self._set_save_path()
-        self._set_group()
-        self._set_use_sequence()
-        self._set_version()
-        self._set_range()
-        self._set_export_items()
-        self._set_export_sequencer()
-        self._set_export_button()
-        self._set_console()
-        self._set_footer()
+    # Initialization strategy:
+
+        if standalone:
+            self._set_title()
+            self._set_group()
+            self._set_save_path()
+            self._set_use_sequence()
+            self._set_version()
+            self._set_range()
+            self._set_export_items()
+            self._set_shot_table()
+            self._set_export_button()
+            self._set_console()
+            self._set_footer()
+        else:
+            self._set_title()
+            self._set_group()
+            self._set_save_path()
+            self._set_use_sequence()
+            self._set_version()
+            self._set_range()
+            self._set_export_items()
+            self._set_shot_table()
+            self._set_export_button()
     # ---------------------------------------------------------------------------
     # Public methods:
 
     def showEvent(self, event):
         super(GUI, self).showEvent(event)
-        GUI._SHOTS_DATA = populate.with_shots(self.sequencer_TBL)
+        self._SHOTS_DATA = populate.with_shots(self.shots_TBL)
 
     def get_group(self):
         return self.root_group_V_LYT
+
+    def get_widget(self, console):
+        self._SHOTS_DATA = populate.with_shots(self.shots_TBL)
+        self.console = console
+        alembic_toolkit_WGT = QtWidgets.QWidget()
+        alembic_toolkit_WGT.setLayout(self.root_group_V_LYT)
+        return alembic_toolkit_WGT
 
     # ---------------------------------------------------------------------------
     # Private methods:
@@ -137,7 +157,7 @@ class GUI(agUI.ToolkitQDialog):
             _form_LYT.insertRow(0, "Save to: ", _browse_H_LYT)
             _H_LYT.addLayout(_form_LYT)
             self.root_save_path = _H_LYT
-            self.root_window_LYT.addLayout(self.root_save_path)
+            self.root_group_V_LYT.addLayout(self.root_save_path)
 
         def _methods():
             def _fill_path():
@@ -194,8 +214,10 @@ class GUI(agUI.ToolkitQDialog):
 
         def _methods():
             def _manage_use_sequence_status(state):
-                self.sequencer_TBL.setVisible(state)
-                self.sequencer_TBL.setEnabled(state)
+                self.shots_TBL.setVisible(state)
+                self.shots_TBL.setEnabled(state)
+                self.refresh_shots_BTN.setVisible(state)
+                self.refresh_shots_BTN.setEnabled(state)
                 self.range_visibility_WGT.setEnabled(not state)
                 self.range_visibility_WGT.setVisible(not state)
 
@@ -292,29 +314,46 @@ class GUI(agUI.ToolkitQDialog):
         _methods()
         self.root_group_V_LYT.addLayout(self.root_export_items_LYT)
 
-    def _set_export_sequencer(self):
+    def _set_shot_table(self):
         self.root_export_sequencer_LYT = None
 
         def _widgets():
-            self.sequencer_TBL = agUI.ToolkitQTableWidget()
-            self.sequencer_TBL.setColumnCount(4)
-            self.sequencer_TBL.setHorizontalHeaderLabels(
+            self.shots_TBL = agUI.ToolkitQTableWidget()
+            self.shots_TBL.setSortingEnabled(True)
+            self.shots_TBL.setColumnCount(4)
+            self.shots_TBL.setHorizontalHeaderLabels(
                 ["Shot", "Range", "Camera", "Export"])
-            self.sequencer_TBL.setVisible(self._use_sequence_CBX.isChecked())
+            self.shots_TBL.setVisible(self._use_sequence_CBX.isChecked())
+
+            self.refresh_shots_BTN = agUI.ToolkitQPushButton("Refresh")
+            self.refresh_shots_BTN.setVisible(
+                self._use_sequence_CBX.isChecked())
 
         def _layouts():
             _V_LYT = QtWidgets.QVBoxLayout()
 
+            _V_shots_widgets_LYT = QtWidgets.QVBoxLayout()
             _H_sequencer_table_LYT = QtWidgets.QHBoxLayout()
-            _H_sequencer_table_LYT.addWidget(self.sequencer_TBL)
+            _H_sequencer_table_LYT.addWidget(self.shots_TBL)
+            _H_refresh_shots_table_LYT = QtWidgets.QHBoxLayout()
+            _H_refresh_shots_table_LYT.addStretch()
+            _H_refresh_shots_table_LYT.addWidget(self.refresh_shots_BTN)
 
             _V_LYT.addLayout(_H_sequencer_table_LYT)
+            _V_LYT.addLayout(_H_refresh_shots_table_LYT)
 
             self.root_export_sequencer_LYT = _V_LYT
             self.root_group_V_LYT.addLayout(self.root_export_sequencer_LYT)
 
+        def _methods():
+            def refresh_table():
+                populate.with_shots(self.shots_TBL)
+
+            self.refresh_shots_BTN.clicked.connect(refresh_table)
+
         _widgets()
         _layouts()
+        _methods()
 
     def _set_export_button(self):
         self.root_export_button_LYT = None
@@ -348,7 +387,7 @@ class GUI(agUI.ToolkitQDialog):
                             "start": _start,
                             "end": _end,
                             "path": self.path_LNE.text(),
-                            "subfolder": "ExportedAlembics",
+                            "subfolder": "Alembics",
                             "shot": "",
                             "version": self.version_CBX.currentText()
                         })
@@ -360,7 +399,7 @@ class GUI(agUI.ToolkitQDialog):
             def export_shots():
                 def get_shots_to_export():
                     result = []
-                    for shot in GUI._SHOTS_DATA:
+                    for shot in self._SHOTS_DATA:
                         if shot["widget"].isChecked():
                             result.append(shot)
                     return result
@@ -375,7 +414,7 @@ class GUI(agUI.ToolkitQDialog):
                                 "start": shot["range"]["start"],
                                 "end": shot["range"]["end"],
                                 "path": self.path_LNE.text(),
-                                "subfolder": "ExportedAlembics",
+                                "subfolder": "Alembics",
                                 "shot": shot["shot"].split("_")[1],
                                 "version": self.version_CBX.currentText()
                             })
@@ -387,7 +426,7 @@ class GUI(agUI.ToolkitQDialog):
 
             def export_strategy():
                 if self._use_sequence_CBX.isChecked():
-                    if len(GUI._SHOTS_DATA) > 0:
+                    if len(self._SHOTS_DATA) > 0:
                         export_shots()
                     else:
                         self.console.log(
