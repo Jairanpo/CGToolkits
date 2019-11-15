@@ -197,7 +197,7 @@ class GUI(agUI.ToolkitQDialog):
         self.rs_ID_tab_LYT.addLayout(self.ID_main_V_LYT)
         self.rs_layers_tab_LYT.addLayout(self.layers_main_V_LYT)
 
-        main_LYT.addWidget(self.console)
+        main_LYT.addWidget(self.console.get_widget())
         main_LYT.addLayout(self.footer_H_LYT)
 
     def create_connections(self):

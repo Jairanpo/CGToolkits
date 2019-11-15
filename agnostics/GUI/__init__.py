@@ -101,7 +101,7 @@ class ToolkitQTableWidget(QtWidgets.QTableWidget):
             self.enter_pressed.emit()
 
 
-class ToolkitQConsole(QtWidgets.QTextEdit):
+class ToolkitQConsole():
     def __init__(self):
         self._colors = {
             "standar": QtGui.QColor(120, 120, 120),
@@ -109,32 +109,73 @@ class ToolkitQConsole(QtWidgets.QTextEdit):
             "warning": QtGui.QColor(170, 150, 40),
             "error": QtGui.QColor(180, 60, 60)
         }
-        super(ToolkitQConsole, self).__init__()
-        self.setPlainText("Logs...")
-        self.setStyleSheet(_DARK_TED_STYLE)
-        self.setMinimumHeight(40)
-        self.setMaximumHeight(100)
-        self.setSizePolicy(QtWidgets.QSizePolicy.Minimum,
-                           QtWidgets.QSizePolicy.Minimum)
-        self.setReadOnly(True)
 
+        self._set_console()
+
+    # -------------------------------------------------------------
+    # Public methods:
     def log(self, message, color="standar"):
         if color == "success":
-            self.setText('')
-            self.setTextColor(self._colors["success"])
-            self.setText('<Success> ' + message)
+            self.console_TED.setText('')
+            self.console_TED.setTextColor(self._colors["success"])
+            self.console_TED.setText('<Success> ' + message)
         elif color == "warning":
-            self.setText('')
-            self.setTextColor(self._colors["warning"])
-            self.setText('<Warning> ' + message)
+            self.console_TED.setText('')
+            self.console_TED.setTextColor(self._colors["warning"])
+            self.console_TED.setText('<Warning> ' + message)
         elif color == "error":
-            self.setText('')
-            self.setTextColor(self._colors["error"])
-            self.setText('<Error> ' + message)
+            self.console_TED.setText('')
+            self.console_TED.setTextColor(self._colors["error"])
+            self.console_TED.setText('<Error> ' + message)
         else:
-            self.setText('')
-            self.setTextColor(self._colors["standar"])
-            self.setText(message)
+            self.console_TED.setText('')
+            self.console_TED.setTextColor(self._colors["standar"])
+            self.console_TED.setText(message)
+
+    def get_widget(self):
+        console_WGT = QtWidgets.QWidget()
+        console_WGT.setLayout(self.H_root_console_LYT)
+        return console_WGT
+    # -------------------------------------------------------------
+    # Private methods:
+
+    def _set_console(self):
+        self.H_root_console_LYT = None
+
+        def _widgets():
+            self.console_TED = QtWidgets.QTextEdit()
+            self.console_TED.setPlainText("Logs...")
+            self.console_TED.setStyleSheet(_DARK_TED_STYLE)
+            self.console_TED.setMinimumHeight(40)
+            self.console_TED.setMaximumHeight(100)
+            self.console_TED.setSizePolicy(QtWidgets.QSizePolicy.Minimum,
+                                           QtWidgets.QSizePolicy.Minimum)
+            self.console_TED.setReadOnly(True)
+
+            self.clear_BTN = QtWidgets.QPushButton("Clear console")
+
+        def _layouts():
+            _V_LYT = QtWidgets.QVBoxLayout()
+            _V_LYT.addWidget(self.console_TED)
+
+            _H_clear_button_LYT = QtWidgets.QHBoxLayout()
+            _H_clear_button_LYT.addStretch()
+            _H_clear_button_LYT.addWidget(self.clear_BTN)
+
+            _V_LYT.addLayout(_H_clear_button_LYT)
+
+            self.H_root_console_LYT = _V_LYT
+            
+        def _methods():
+            def clear_console():
+                self.console_TED.setText('')
+                self.console_TED.setTextColor(self._colors["standar"])
+                
+            self.clear_BTN.clicked.connect(clear_console)
+
+        _widgets()
+        _layouts()
+        _methods()
 
 
 class ToolkitQGroupBox(QtWidgets.QGroupBox):
