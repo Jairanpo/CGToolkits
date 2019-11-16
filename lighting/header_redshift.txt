@@ -16,6 +16,5 @@ if path in sys.path: pass
 else:sys.path.append(path)
 
 import redshift
-reload(redshift)
 
 redshift.toolkit.GUI().show_dialog()

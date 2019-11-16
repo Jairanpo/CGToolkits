@@ -13,11 +13,6 @@ import populate
 import frameRange
 import cache.alembic as abc
 
-reload(agUI)
-reload(populate)
-reload(frameRange)
-reload(abc)
-
 __version__ = 'v1.0.0'
 _NAME = "Alembic Manager"
 

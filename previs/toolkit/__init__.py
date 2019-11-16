@@ -20,8 +20,6 @@ import previs.moveShots as moveShots
 import previs.playblast as playblast
 import previs.panels as panels
 
-reload(abcToolkit)
-
 
 __version__ = '3.1.0'
 _NAME = "Previs Toolkit"
