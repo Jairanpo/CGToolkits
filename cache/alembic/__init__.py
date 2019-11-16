@@ -5,6 +5,9 @@ import pymel.core as pm
 
 
 def export(metadata):
+    pm.loadPlugin("AbcImport.mll", quiet=True)
+    pm.loadPlugin("AbcExport.mll", quiet=True)
+
     """
         dictionary metadata:{
             "start":  frame at which start
@@ -18,22 +21,23 @@ def export(metadata):
         }
     """
 
-    _root_flag = metadata["root_flag"]
-    _filename = ""
+ _root_flag = metadata["root_flag"]
+  _filename = ""
 
-    if metadata["shot"] == "":
+   if metadata["shot"] == "":
         _filename = "{0}_{1}".format(metadata["filename"], metadata["version"])
     else:
-        _filename = "{0}_{1}_{2}".format(metadata["shot"], metadata["filename"], metadata["version"])
+        _filename = "{0}_{1}_{2}".format(
+            metadata["shot"], metadata["filename"], metadata["version"])
 
-    _filepath = os.path.join(metadata["path"], metadata["subfolder"], metadata["version"]) 
-    
+    _filepath = os.path.join(
+        metadata["path"], metadata["subfolder"], metadata["version"])
+
     if not os.path.exists(_filepath):
         os.makedirs(_filepath)
         _filepath = os.path.join(_filepath, _filename)
     else:
         _filepath = os.path.join(_filepath, _filename)
-        
 
     _filepath = os.path.normpath(_filepath)
 
