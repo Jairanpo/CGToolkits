@@ -21,10 +21,10 @@ def export(metadata):
         }
     """
 
- _root_flag = metadata["root_flag"]
-  _filename = ""
+    _root_flag = metadata["root_flag"]
+    _filename = ""
 
-   if metadata["shot"] == "":
+    if metadata["shot"] == "":
         _filename = "{0}_{1}".format(metadata["filename"], metadata["version"])
     else:
         _filename = "{0}_{1}_{2}".format(
