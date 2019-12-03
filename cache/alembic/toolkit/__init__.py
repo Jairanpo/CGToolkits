@@ -12,6 +12,11 @@ import agnostics.GUI as agUI
 import populate
 import frameRange
 import cache.alembic as abc
+import previs.editorial as editorial
+reload(abc)
+reload(populate)
+reload(editorial)
+reload(frameRange)
 
 __version__ = 'v1.0.0'
 _NAME = "Alembic Manager"
@@ -50,10 +55,10 @@ class GUI(agUI.ToolkitQDialog):
         self._win_icon = QtGui.QIcon(
             os.path.join(self._icons_path, "alembic.ico"))
         self.setWindowIcon(self._win_icon)
-        self.setMinimumWidth(400)
+        self.setMinimumWidth(500)
         self.setMaximumWidth(1200)
         self.setMinimumHeight(200)
-        self.setMaximumHeight(800)
+        self.setMaximumHeight(1200)
         self.root_window_LYT = QtWidgets.QVBoxLayout()
         self.setLayout(self.root_window_LYT)
 
@@ -297,6 +302,7 @@ class GUI(agUI.ToolkitQDialog):
         def _methods():
             def _populate_signal():
                 populate.with_items(self.export_items_TBL)
+                pm.select(clear=True)
 
             def _update_table(row, column):
                 populate.update_item(self.export_items_TBL, row, column)
@@ -315,9 +321,9 @@ class GUI(agUI.ToolkitQDialog):
         def _widgets():
             self.shots_TBL = agUI.ToolkitQTableWidget()
             self.shots_TBL.setSortingEnabled(True)
-            self.shots_TBL.setColumnCount(4)
+            self.shots_TBL.setColumnCount(5)
             self.shots_TBL.setHorizontalHeaderLabels(
-                ["Shot", "Range", "Camera", "Export"])
+                ["Shot", "Range", "Camera", "Export", "Export Camera?"])
             self.shots_TBL.setVisible(self._use_sequence_CBX.isChecked())
 
             self.refresh_shots_BTN = agUI.ToolkitQPushButton("Refresh")
@@ -400,9 +406,13 @@ class GUI(agUI.ToolkitQDialog):
                     return result
 
                 shots = get_shots_to_export()
+
                 if len(shots) > 0:
+
+                    camera_exported = False
+
                     for shot in shots:
-                        print(shot)
+
                         abc.export_selected(
                             self.export_items_TBL,
                             {
@@ -413,6 +423,34 @@ class GUI(agUI.ToolkitQDialog):
                                 "shot": shot["shot"].split("_")[1],
                                 "version": self.version_CBX.currentText()
                             })
+
+                        def do_export_camera():
+                            if shot["export_camera_widget"].isChecked():
+                                return True
+                            return False
+
+                        if do_export_camera() and camera_exported != True:
+                            editorial.export(
+                                path=self.path_LNE.text(),
+                                shotcode=shot["shot"].split("_")[1],
+                                version=self.version_CBX.currentText())
+
+                            self.console.log("Editorial exported", "success")
+
+                            abc.export(
+                                {
+                                    "start":  shot["range"]["start"],
+                                    "end": shot["range"]["end"],
+                                    "path": self.path_LNE.text(),
+                                    "filename": "Camera",
+                                    "subfolder": "Cameras",
+                                    "shot": shot["shot"].split("_")[1],
+                                    "root_flag": pm.ls(pm.ls(shot["shot"], type="shot")[0].getCurrentCamera())[0].longName(),
+                                    "version": self.version_CBX.currentText()
+                                })
+                            camera_exported = True
+                            self.console.log("Camera exported", "success")
+
                     self.console.log("Exporting process finished", "success")
 
                 else:

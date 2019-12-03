@@ -31,7 +31,7 @@ def export(metadata):
             metadata["shot"], metadata["filename"], metadata["version"])
 
     _filepath = os.path.join(
-        metadata["path"], metadata["subfolder"], metadata["version"])
+        metadata["path"], metadata["subfolder"])
 
     if not os.path.exists(_filepath):
         os.makedirs(_filepath)
@@ -50,7 +50,7 @@ def export(metadata):
     pm.AbcExport(j=mel_command)
 
 
-def export_selected(QWidgetTable, metadata):
+def export_selected(QWidgetTable, metadata, single_frame=False):
     """
         dictionary metadata:{
             "start":  frame at which start
@@ -77,7 +77,7 @@ def export_selected(QWidgetTable, metadata):
                 "shot": metadata["shot"],
                 "filename": node_filename,
                 "root_flag": node_root_flag,
-                "version": metadata["version"]
+                "version": metadata["version"],
             }
 
             export(export_data)

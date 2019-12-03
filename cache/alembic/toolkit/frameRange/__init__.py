@@ -3,7 +3,7 @@ def validate(start, end):
         "status": False,
         "message": "Invalid"
     }
-    if start >= end:
+    if start > end:
         result["message"] = "You didn't provide a valid range."
         return result
 
