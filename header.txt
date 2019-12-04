@@ -20,12 +20,18 @@ else:
 
 # Redshift Toolkit execution:
 import lighting.redshift.toolkit as rs
+if env == "dev":
+    reload(rs)
 rs.GUI().show_dialog()
 
 # Previs Toolkit execution:
 import previs.toolkit as pvs
+if env == "dev":
+    reload(pvs)
 pvs.GUI().show_dialog()
 
 # Standalone Alembic Manager Toolkit execution:
 import cache.alembic.toolkit as abc
+if env == "dev":
+    reload(abc)
 abc.GUI().show_dialog()
