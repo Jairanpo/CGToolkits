@@ -116,6 +116,7 @@ def is_list_of_shots(list_of_shots):
 # ======================================================================================================================
 
 def create_directory_in_desktop():
+    print("PLAYBLAST_PATH: " + playblast_Path)
     try:
         if is_folder_in_desktop:
             print(
