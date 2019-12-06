@@ -13,10 +13,12 @@ import populate
 import frameRange
 import cache.alembic as abc
 import previs.editorial as editorial
+import playblast
 reload(abc)
 reload(populate)
 reload(editorial)
 reload(frameRange)
+reload(playblast)
 
 __version__ = 'v1.0.0'
 _NAME = "Alembic Manager"
@@ -59,6 +61,7 @@ class GUI(agUI.ToolkitQDialog):
         self.setMaximumWidth(1200)
         self.setMinimumHeight(200)
         self.setMaximumHeight(1200)
+        self.resize(800, 800)
         self.root_window_LYT = QtWidgets.QVBoxLayout()
         self.setLayout(self.root_window_LYT)
 
@@ -321,9 +324,9 @@ class GUI(agUI.ToolkitQDialog):
         def _widgets():
             self.shots_TBL = agUI.ToolkitQTableWidget()
             self.shots_TBL.setSortingEnabled(True)
-            self.shots_TBL.setColumnCount(5)
+            self.shots_TBL.setColumnCount(6)
             self.shots_TBL.setHorizontalHeaderLabels(
-                ["Shot", "Range", "Camera", "Export", "Export Camera?"])
+                ["Shot", "Range", "Camera", "Export", "Camera?", "Clip?"])
             self.shots_TBL.setVisible(self._use_sequence_CBX.isChecked())
 
             self.refresh_shots_BTN = agUI.ToolkitQPushButton("Refresh")
@@ -408,11 +411,7 @@ class GUI(agUI.ToolkitQDialog):
                 shots = get_shots_to_export()
 
                 if len(shots) > 0:
-
-                    camera_exported = False
-
                     for shot in shots:
-
                         abc.export_selected(
                             self.export_items_TBL,
                             {
@@ -424,10 +423,13 @@ class GUI(agUI.ToolkitQDialog):
                                 "version": self.version_CBX.currentText()
                             })
 
+                        # Export camera?: -------------------------------------------------------
                         def do_export_camera():
                             if shot["export_camera_widget"].isChecked():
                                 return True
                             return False
+
+                        camera_exported = False
 
                         if do_export_camera() and camera_exported != True:
                             editorial.export(
@@ -436,7 +438,6 @@ class GUI(agUI.ToolkitQDialog):
                                 version=self.version_CBX.currentText())
 
                             self.console.log("Editorial exported", "success")
-
                             abc.export(
                                 {
                                     "start":  shot["range"]["start"],
@@ -445,11 +446,28 @@ class GUI(agUI.ToolkitQDialog):
                                     "filename": "Camera",
                                     "subfolder": "Cameras",
                                     "shot": shot["shot"].split("_")[1],
-                                    "root_flag": pm.ls(pm.ls(shot["shot"], type="shot")[0].getCurrentCamera())[0].longName(),
+                                    "root_flag": shot["camera"].longName(),
                                     "version": self.version_CBX.currentText()
                                 })
                             camera_exported = True
                             self.console.log("Camera exported", "success")
+
+                        # Export clip?: -------------------------------------------------------
+                        def do_export_clip():
+                            if shot["export_clip_widget"].isChecked():
+                                return True
+                            return False
+
+                        clip_exported = False
+
+                        if do_export_camera() and clip_exported != True:
+                            playblast.do(self.path_LNE.text(), {
+                                "start": shot["range"]["start"],
+                                "end": shot["range"]["end"],
+                                "camera": shot["camera"],
+                                "code": shot["shot"].split("_")[1],
+                                "version": self.version_CBX.currentText()
+                            })
 
                     self.console.log("Exporting process finished", "success")
 

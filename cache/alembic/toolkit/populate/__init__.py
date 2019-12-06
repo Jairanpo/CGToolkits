@@ -79,7 +79,7 @@ def with_shots(QTableWidget):
             QtCore.Qt.AlignHCenter)
         i_camera.setFlags(
             QtCore.Qt.NoItemFlags)
-        data["camera"] = node.getCurrentCamera()
+        data["camera"] = pm.ls(node.getCurrentCamera())[0]
 
         _export_WGT = QtWidgets.QWidget()
         _export_CBX = QtWidgets.QCheckBox()
@@ -97,11 +97,20 @@ def with_shots(QTableWidget):
         _export_camera_WGT.setLayout(_H_camera_LYT)
         data["export_camera_widget"] = _export_camera_CBX
 
+        _export_clip_WGT = QtWidgets.QWidget()
+        _export_clip_CBX = QtWidgets.QCheckBox()
+        _H_clip_LYT = QtWidgets.QHBoxLayout()
+        _H_clip_LYT.addWidget(_export_clip_CBX)
+        _H_clip_LYT.setAlignment(QtCore.Qt.AlignHCenter)
+        _export_clip_WGT.setLayout(_H_clip_LYT)
+        data["export_clip_widget"] = _export_camera_CBX
+
         QTableWidget.setItem(index, 0, i_shot_name)
         QTableWidget.setItem(index, 1, i_range)
         QTableWidget.setItem(index, 2, i_camera)
         QTableWidget.setCellWidget(index, 3, _export_WGT)
         QTableWidget.setCellWidget(index, 4, _export_camera_WGT)
+        QTableWidget.setCellWidget(index, 5, _export_clip_WGT)
 
         result.append(data)
 

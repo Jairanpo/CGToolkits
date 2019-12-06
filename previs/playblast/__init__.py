@@ -23,6 +23,8 @@ pm.headsUpDisplay('HUDViewAxis', visible=False, edit=True)
 def by_shots():
     result = {"status": "", "message": ""}
     list_of_shots = pm.ls(sl=True, type='shot')
+    change_cameras_settings()
+
     create_directory_in_desktop()
     if is_list_of_shots(list_of_shots):
         sequence_path = create_directory(list_of_shots[0].split('_')[0])
@@ -42,6 +44,7 @@ def by_shots():
 
 
 def by_sequence():
+    change_cameras_settings()
     result = {"status": "", "message": ""}
     list_of_shots = pm.ls(sl=True, type='shot')
     create_directory_in_desktop()
@@ -159,3 +162,13 @@ def shot_frame_range(shot_name):
     range.insert(0, pm.shot(shot_name, sequenceStartTime=True, query=True))
     range.insert(1, pm.shot(shot_name, sequenceEndTime=True, query=True))
     return range
+
+
+def change_cameras_settings():
+    cameras = pm.ls(type="camera")
+    for camera in cameras:
+        camera.displayGateMask.set(0)
+        camera.displayResolution.set(0)
+        camera.displaySafeAction.set(0)
+        camera.displaySafeTitle.set(0)
+        camera.overscan.set(1)
