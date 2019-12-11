@@ -33,6 +33,17 @@ _DARK_CBX_STYLE = '''
     background:rgb(20,20,20);
     selection-background-color:rgb(250,100,30);
     '''
+
+_DARK_SBX_STYLE = '''
+    color: white;
+    background:rgb(20,20,20);
+    selection-background-color:rgb(250,100,30);
+    '''
+
+_DARK_LBL_STYLE = '''
+    color: rgb(200,200,200);
+'''
+
 # End color definitions.
 
 
@@ -49,18 +60,16 @@ class ToolkitQTab(QtWidgets.QTabWidget):
         super(ToolkitQTab, self).__init__()
 
         self.setStyleSheet('''
-                QTabBar::tab{
-                background-color:rgb(30,30,30);
+                QTabBar: : tab{
+                background-color: rgb(30, 30, 30);
                 font: bold;
-                width:100px;
-                }
+                width: 100px; }
 
-                QTabBar::tab:selected, QTabBar::tab:hover {
-                background: rgb(120,100,60);
-                }
+                QTabBar: : tab: selected, QTabBar: : tab: hover {
+                background: rgb(120, 100, 60);}
 
-                QTabWidget::pane {border-top: 2px solid #C2C7CB;}
-                QTabWidget::tab-bar {left: 20px;}
+                QTabWidget:: pane {border-top: 2px solid  # C2C7CB;}
+                QTabWidget:: tab-bar {left: 20px; }
             ''')
 
 
@@ -165,12 +174,12 @@ class ToolkitQConsole():
             _V_LYT.addLayout(_H_clear_button_LYT)
 
             self.H_root_console_LYT = _V_LYT
-            
+
         def _methods():
             def clear_console():
                 self.console_TED.setText('')
                 self.console_TED.setTextColor(self._colors["standar"])
-                
+
             self.clear_BTN.clicked.connect(clear_console)
 
         _widgets()
@@ -234,3 +243,24 @@ class ToolkitQFooter():
 
     def connections(self):
         self.close_BTN.clicked.connect(self.instance.close)
+
+
+class ToolkitQSpinBox(QtWidgets.QSpinBox):
+    def __init__(self, prefix):
+        super().__init__()
+        self.setPrefix(prefix)
+        self.setStyleSheet(_DARK_SBX_STYLE)
+
+
+class ToolkitQIconButton(QtWidgets.QPushButton):
+    def __init__(self, icon, label=''):
+        super().__init__(label)
+        self.setIcon(icon)
+        self.setIconSize(QtCore.QSize(50, 50))
+        self.setStyleSheet(_BLUE_BTN_STYLE)
+
+
+class ToolkitQLabel(QtWidgets.QLabel):
+    def __init__(self, text):
+        super().__init__(text)
+        self.setStyleSheet(_DARK_LBL_STYLE)
