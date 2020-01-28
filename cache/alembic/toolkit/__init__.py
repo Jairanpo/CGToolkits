@@ -8,17 +8,13 @@ import maya.OpenMayaUI as omui
 import pymel.core as pm
 
 # Local application imports
-import agnostics.GUI as agUI
+import CGAgnostics.GUI as agUI
 import populate
 import frameRange
 import cache.alembic as abc
 import previs.editorial as editorial
 import playblast
-reload(abc)
-reload(populate)
-reload(editorial)
-reload(frameRange)
-reload(playblast)
+
 
 __version__ = 'v1.0.0'
 _NAME = "Alembic Manager"

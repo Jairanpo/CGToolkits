@@ -11,7 +11,7 @@ import maya.mel as mel
 
 # Local application imports
 import cache.alembic.toolkit as abcToolkit
-import agnostics.GUI as agUI
+import CGAgnostics.GUI as agUI
 import previs.createShot.simpleCameraRig as simpleCameraRig
 import previs.createShot.sequencerShot as sequencerShot
 import previs.editShots as editShots
@@ -19,9 +19,6 @@ import previs.camOps as camOps
 import previs.moveShots as moveShots
 import previs.playblast as playblast
 import previs.panels as panels
-
-reload(playblast)
-
 
 __version__ = '3.1.0'
 _NAME = "Previs Toolkit"

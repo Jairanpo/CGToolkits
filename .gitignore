@@ -1,3 +1,4 @@
-lighting/venv
 
 *.pyc
+
+venv

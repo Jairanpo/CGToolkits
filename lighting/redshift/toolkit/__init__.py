@@ -8,7 +8,7 @@ import maya.OpenMayaUI as omui
 import pymel.core as pm
 
 # Local application imports
-import agnostics.GUI as agUI
+import CGAgnostics.GUI as agUI
 import lighting.redshift.rsLayers as layers
 import lighting.redshift.config as config
 import lighting.redshift.rsID as rsID
