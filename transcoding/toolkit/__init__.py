@@ -21,10 +21,11 @@ class Transcoding(agUI.ToolkitQDialog):
         print(self._main_path)
         self._icons_path = os.path.join(self._main_path, 'icons')
         self._window_icon = QtGui.QIcon(
-            os.path.join(self._icons_path, "icon.ico"))
+            os.path.join(self._icons_path, "video.ico"))
         self.setWindowFlags(self.windowFlags() ^
                             QtCore.Qt.WindowContextHelpButtonHint)
         self.setWindowIcon(self._window_icon)
+        self.resize(1000, 400)
 
         self._widgets()
         self._layouts()
@@ -39,20 +40,26 @@ class Transcoding(agUI.ToolkitQDialog):
         self.generic = Source(parent=self, name="GENERICO")
         self.intergeneric = Source(parent=self, name="INTERGENERICO")
 
-        self._create_button_WGT = QtWidgets.QWidget()
-        self.create_BTN = agUI.ToolkitQCreateButton()
+        self._export_WGT = QtWidgets.QWidget()
+        self._export_path_LBL = agUI.ToolkitQLabel("<h3>Destination:</h3>")
+        self._export_path_LNE = agUI.ToolkitQLineEdit()
+        self._export_path_BTN = agUI.ToolkitQBrowseButton(
+            self, lineedit=self._export_path_LNE, size=[40, 40])
+        self._export_BTN = agUI.ToolkitQCreateButton(size=[100, 40])
 
     def _layouts(self):
-        _H_create_button_LYT = QtWidgets.QHBoxLayout()
-        _H_create_button_LYT.addStretch()
-        _H_create_button_LYT.addWidget(self.create_BTN)
-        _H_create_button_LYT.addStretch()
-        self._create_button_WGT.setLayout(_H_create_button_LYT)
+        _H_export_button_LYT = QtWidgets.QHBoxLayout()
+        _H_export_button_LYT.addWidget(self._export_path_LBL)
+        _H_export_button_LYT.addWidget(self._export_path_LNE)
+        _H_export_button_LYT.addWidget(self._export_path_BTN)
+        _H_export_button_LYT.addWidget(self._export_BTN)
+
+        self._export_WGT.setLayout(_H_export_button_LYT)
 
         self._splitter_SPL.addWidget(self.master.widget)
         self._splitter_SPL.addWidget(self.generic.widget)
         self._splitter_SPL.addWidget(self.intergeneric.widget)
-        self._splitter_SPL.addWidget(self._create_button_WGT)
+        self._splitter_SPL.addWidget(self._export_WGT)
         self._splitter_SPL.addWidget(self.console.widget)
         self._splitter_SPL.addWidget(self.footer.widget)
 

@@ -29,7 +29,8 @@ class Source(agUI.ToolkitQWidget):
         return self._WGT
 
     def _widgets(self):
-        self._enable_CBX = QtWidgets.QCheckBox(self._name)
+        self._enable_CBX = agUI.ToolkitQCheckBox(self._name)
+        self._enable_CBX.setCheckState(QtCore.Qt.Checked)
         self._source_LBL = agUI.ToolkitQLabel(f"<h3>Source:</h3>")
         self._source_LNE = agUI.ToolkitQLineEdit()
         self._source_BTN = agUI.ToolkitQBrowseButton(
@@ -39,16 +40,21 @@ class Source(agUI.ToolkitQWidget):
             size=[20, 20],
             filter="Videos(*.mp4 * .avi * .mov * .webmd)")
 
-        self._filename_LBL = agUI.ToolkitQLabel(f"<h3>Filename:</h3>")
+        self._filename_LBL = agUI.ToolkitQLabel(f"Filename:")
         self._filename_LNE = agUI.ToolkitQLineEdit("Filename")
 
-        self._videos_CBX = QtWidgets.QCheckBox("Video")
+        self._videos_CBX = agUI.ToolkitQCheckBox("Video")
+        self._videos_CBX.setCheckState(QtCore.Qt.Checked)
         self._video_foldername_LNE = agUI.ToolkitQLineEdit("Carpeta 01")
-        self._QT_CBX = QtWidgets.QCheckBox("QT")
-        self._HD_CBX = QtWidgets.QCheckBox("HD")
-        self._UNCOMPRESS_CBX = QtWidgets.QCheckBox("UNCOMPRESS")
+        self._QT_CBX = agUI.ToolkitQCheckBox("QT")
+        self._QT_CBX.setCheckState(QtCore.Qt.Checked)
+        self._HD_CBX = agUI.ToolkitQCheckBox("HD")
+        self._HD_CBX.setCheckState(QtCore.Qt.Checked)
+        self._UNCOMPRESS_CBX = agUI.ToolkitQCheckBox("UNCOMPRESS")
+        self._UNCOMPRESS_CBX.setCheckState(QtCore.Qt.Checked)
 
-        self._image_sequence_CBX = QtWidgets.QCheckBox("Image sequence")
+        self._image_sequence_CBX = agUI.ToolkitQCheckBox("Image sequence")
+        self._image_sequence_CBX.setCheckState(QtCore.Qt.Checked)
         self._image_sequence_foldername_LNE = agUI.ToolkitQLineEdit(
             "Carpeta 03")
 
@@ -83,4 +89,29 @@ class Source(agUI.ToolkitQWidget):
         self._V_root_LYT = _V_LYT
 
     def _methods(self):
-        pass
+        _all_widgets = [
+            self._source_LBL,
+            self._source_BTN,
+            self._source_LNE,
+            self._filename_LBL,
+            self._filename_LNE,
+            self._videos_CBX,
+            self._video_foldername_LNE,
+            self._QT_CBX,
+            self._HD_CBX,
+            self._UNCOMPRESS_CBX,
+            self._image_sequence_CBX,
+            self._image_sequence_foldername_LNE
+        ]
+
+        def _disable():
+            if self._enable_CBX.isChecked():
+                for each in _all_widgets:
+                    each.setEnabled(True)
+                    each.show()
+            else:
+                for each in _all_widgets:
+                    each.setEnabled(False)
+                    each.hide()
+
+        self._enable_CBX.clicked.connect(_disable)
