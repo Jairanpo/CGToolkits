@@ -30,19 +30,32 @@ class Transcoding(agUI.ToolkitQDialog):
         self._layouts()
 
     def _widgets(self):
+        self._splitter_SPL = agUI.ToolkitQSplitter()
+        self._splitter_SPL.setOrientation(QtCore.Qt.Vertical)
         self.console = agUI.ToolkitQConsole()
         self.footer = agUI.ToolkitQFooter(self)
 
-        self.source = Source(self, is_file=True)
-        self.source.console = self.console
+        self.master = Source(parent=self, name="MASTER")
+        self.generic = Source(parent=self, name="GENERICO")
+        self.intergeneric = Source(parent=self, name="INTERGENERICO")
 
-        self._splitter_SPL = agUI.ToolkitQSplitter()
-        self._splitter_SPL.setOrientation(QtCore.Qt.Vertical)
-        self._splitter_SPL.addWidget(self.source.widget)
+        self._create_button_WGT = QtWidgets.QWidget()
+        self.create_BTN = agUI.ToolkitQCreateButton()
+
+    def _layouts(self):
+        _H_create_button_LYT = QtWidgets.QHBoxLayout()
+        _H_create_button_LYT.addStretch()
+        _H_create_button_LYT.addWidget(self.create_BTN)
+        _H_create_button_LYT.addStretch()
+        self._create_button_WGT.setLayout(_H_create_button_LYT)
+
+        self._splitter_SPL.addWidget(self.master.widget)
+        self._splitter_SPL.addWidget(self.generic.widget)
+        self._splitter_SPL.addWidget(self.intergeneric.widget)
+        self._splitter_SPL.addWidget(self._create_button_WGT)
         self._splitter_SPL.addWidget(self.console.widget)
         self._splitter_SPL.addWidget(self.footer.widget)
 
-    def _layouts(self):
         self.V_root_window_LYT = QtWidgets.QVBoxLayout(self)
         self.V_root_window_LYT.addWidget(self._splitter_SPL)
 
