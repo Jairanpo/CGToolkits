@@ -31,6 +31,9 @@ class Source(agUI.ToolkitQWidget):
     def _widgets(self):
         self._enable_CBX = agUI.ToolkitQCheckBox(self._name)
         self._enable_CBX.setCheckState(QtCore.Qt.Checked)
+
+        self._content_WGT = QtWidgets.QWidget()
+
         self._source_LBL = agUI.ToolkitQLabel(f"<h3>Source:</h3>")
         self._source_LNE = agUI.ToolkitQLineEdit()
         self._source_BTN = agUI.ToolkitQBrowseButton(
@@ -82,36 +85,58 @@ class Source(agUI.ToolkitQWidget):
         _Grid_LYT.addWidget(self._UNCOMPRESS_CBX, 2, 4)
         _Grid_LYT.addWidget(self._image_sequence_CBX, 3, 0)
         _Grid_LYT.addWidget(self._image_sequence_foldername_LNE, 3, 1)
-        _H_LYT.addLayout(_Grid_LYT)
 
+        self._content_WGT.setLayout(_Grid_LYT)
+        _H_LYT.addWidget(self._content_WGT)
         _V_LYT.addLayout(_H_LYT)
 
         self._V_root_LYT = _V_LYT
 
     def _methods(self):
-        _all_widgets = [
-            self._source_LBL,
-            self._source_BTN,
-            self._source_LNE,
-            self._filename_LBL,
-            self._filename_LNE,
-            self._videos_CBX,
-            self._video_foldername_LNE,
-            self._QT_CBX,
-            self._HD_CBX,
-            self._UNCOMPRESS_CBX,
-            self._image_sequence_CBX,
-            self._image_sequence_foldername_LNE
-        ]
 
-        def _disable():
+        def _disable_content():
             if self._enable_CBX.isChecked():
-                for each in _all_widgets:
-                    each.setEnabled(True)
-                    each.show()
-            else:
-                for each in _all_widgets:
-                    each.setEnabled(False)
-                    each.hide()
+                self._content_WGT.setEnabled(True)
+                self._videos_CBX.setCheckState(QtCore.Qt.Checked)
+                self._QT_CBX.setCheckState(QtCore.Qt.Checked)
+                self._HD_CBX.setCheckState(QtCore.Qt.Checked)
+                self._UNCOMPRESS_CBX.setCheckState(QtCore.Qt.Checked)
+                self._image_sequence_CBX.setCheckState(QtCore.Qt.Checked)
 
-        self._enable_CBX.clicked.connect(_disable)
+            else:
+                self._videos_CBX.setCheckState(QtCore.Qt.Unchecked)
+                self._QT_CBX.setCheckState(QtCore.Qt.Unchecked)
+                self._HD_CBX.setCheckState(QtCore.Qt.Unchecked)
+                self._UNCOMPRESS_CBX.setCheckState(QtCore.Qt.Unchecked)
+                self._image_sequence_CBX.setCheckState(QtCore.Qt.Unchecked)
+                self._content_WGT.setEnabled(False)
+
+        def _disable_video():
+            if self._videos_CBX.isChecked():
+                self._video_foldername_LNE.setEnabled(True)
+                self._QT_CBX.setEnabled(True)
+                self._QT_CBX.setCheckState(QtCore.Qt.Checked)
+                self._HD_CBX.setEnabled(True)
+                self._HD_CBX.setCheckState(QtCore.Qt.Checked)
+                self._UNCOMPRESS_CBX.setEnabled(True)
+                self._UNCOMPRESS_CBX.setCheckState(QtCore.Qt.Checked)
+            else:
+                self._video_foldername_LNE.setEnabled(False)
+                self._video_foldername_LNE.setEnabled(False)
+                self._QT_CBX.setEnabled(False)
+                self._QT_CBX.setCheckState(QtCore.Qt.Unchecked)
+                self._HD_CBX.setEnabled(False)
+                self._HD_CBX.setCheckState(QtCore.Qt.Unchecked)
+                self._UNCOMPRESS_CBX.setEnabled(False)
+                self._UNCOMPRESS_CBX.setCheckState(QtCore.Qt.Unchecked)
+
+        def _disable_image():
+            if self._image_sequence_CBX.isChecked():
+                self._image_sequence_foldername_LNE.setEnabled(True)
+            else:
+
+                self._image_sequence_foldername_LNE.setEnabled(False)
+
+        self._enable_CBX.clicked.connect(_disable_content)
+        self._videos_CBX.clicked.connect(_disable_video)
+        self._image_sequence_CBX.clicked.connect(_disable_image)
