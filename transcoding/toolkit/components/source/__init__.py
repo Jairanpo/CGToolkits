@@ -5,9 +5,9 @@ import re
 from Qt import QtCore, QtWidgets, QtGui
 import CGAgnostics.GUI as agUI
 
-
 class Source(agUI.ToolkitQWidget):
     def __init__(self, parent, name="NO_NAME", is_file=True):
+        super().__init__()
         self._name = name
         self.parent = parent
         self._WGT = QtWidgets.QWidget()
@@ -28,9 +28,42 @@ class Source(agUI.ToolkitQWidget):
         self._WGT.setLayout(self._V_root_LYT)
         return self._WGT
 
+    @property
+    def is_enabled(self):
+        return self._enable_CBX.getCheckState()
+
+    @property
+    def source(self):
+        return self._source_LNE.text()
+
+    @property
+    def do_export_videos(self):
+        return self._videos_CBX.getCheckState()
+
+    @property
+    def do_export_QT(self):
+        return self._QT_CBX.getCheckState()
+
+    @property
+    def do_export_HD(self):
+        return self._HD_CBX.getCheckState()
+
+    @property
+    def do_export_uncompress(self):
+        return self._UNCOMPRESS_CBX.getCheckState()
+
+    @property
+    def do_export_image_sequence(self):
+        return self._image_sequence_CBX.getCheckState()
+
+    @property
+    def image_sequence_path(self):
+        return self._image_sequence_foldername_LNE.text()
+
     def _widgets(self):
         self._enable_CBX = agUI.ToolkitQCheckBox(self._name)
         self._enable_CBX.setCheckState(QtCore.Qt.Checked)
+        self._enable_CBX.setMinimumWidth(130)
 
         self._content_WGT = QtWidgets.QWidget()
 

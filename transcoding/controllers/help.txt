@@ -1,0 +1,48 @@
+First I need to include a path to the ffmpeg.exe file
+
+INPUT OPTIONS:
+The first parameter in the command is the force overwrite:
+    ffmpeg -y => for "Do overwrite"
+    ffmpeg -n => for "Do not overwrite"
+
+
+The second parameter I can add is the framerate:
+    ffmpeg -y -framerate 24 
+    ffmpeg -y -framerate 30
+
+
+The third parameter to specify it is the input path:
+    ffmpeg -n -framerate 24 -i "C://users//mycomputer//folder//file.mov"
+    ffmpeg -y -framerate 30 -i "C://users//mycomputer//folder//file.mp4"
+
+
+OUTPUT OPTIONS:
+First we must specify the codec with "-c:v":
+    (libx264: Codec for h264)
+    (prores_ks: Codec for prores)
+    ffmpeg -y -framerate 30 -i "C://users//mycomputer//folder//file.mp4" -c:v libx264
+    ffmpeg -y -framerate 30 -i "C://users//mycomputer//folder//file.mp4" -c:v prores_ks
+
+
+Then we need to specify the profile, specially for the prores codec "-profile:v 4444":
+    ffmpeg -y -framerate 30 -i "C://users//mycomputer//folder//file.mp4" 
+    -c:v prores_ks -profile:v 4444
+
+
+then we add the constant rate factor with "-crf 21"
+    ffmpeg -y -framerate 30 -i "C://users//mycomputer//folder//file.mp4" 
+    -c:v libx264 -crf 21
+
+
+Then we add the preset with -preset: A preset is a collection of options that will provide a 
+certain encoding speed to compression ratio. A slower preset will provide better compression 
+(compression is quality per filesize). This means that, for example, if you target a certain 
+file size or constant bit rate, you will achieve better quality with a slower preset. Similarly, 
+for constant quality encoding, you will simply save bitrate by choosing a slower preset.
+ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
+    ffmpeg -y -framerate 30 -i "C://users//mycomputer//folder//file.mp4" 
+    -c:v libx264 -crf 21 -preset "medium"
+
+At the end we add the output path and filename:
+     ffmpeg -y -framerate 30 -i "C://users//mycomputer//folder//file.mp4" 
+     -c:v libx264 -crf 21 -preset "medium"  "C://users//mycomputer//folder//output.mp4"

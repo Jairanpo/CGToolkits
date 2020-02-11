@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 import sys
 import subprocess
 import os
@@ -6,6 +6,8 @@ import os
 import modules
 import CGAgnostics.GUI as agUI
 from Qt import QtCore, QtWidgets, QtGui
+
+import transcoding.controllers as ctrl
 from transcoding.toolkit.components.source import Source
 
 __version__ = "1.0.0"
@@ -29,8 +31,11 @@ class Transcoding(agUI.ToolkitQDialog):
 
         self._widgets()
         self._layouts()
+        self._methods()
 
     def _widgets(self):
+        self._title = agUI.ToolkitQLabel("<h2>Transcoding Toolkit:</h2>")
+        self._title.setStyleSheet("color:rgb(200,150,70)")
         self._splitter_SPL = agUI.ToolkitQSplitter()
         self._splitter_SPL.setOrientation(QtCore.Qt.Vertical)
         self.console = agUI.ToolkitQConsole()
@@ -48,6 +53,7 @@ class Transcoding(agUI.ToolkitQDialog):
         self._export_BTN = agUI.ToolkitQCreateButton(size=[100, 40])
 
     def _layouts(self):
+        _V_LYT = QtWidgets.QVBoxLayout(self)
         _H_export_button_LYT = QtWidgets.QHBoxLayout()
         _H_export_button_LYT.addWidget(self._export_path_LBL)
         _H_export_button_LYT.addWidget(self._export_path_LNE)
@@ -63,8 +69,24 @@ class Transcoding(agUI.ToolkitQDialog):
         self._splitter_SPL.addWidget(self.console.widget)
         self._splitter_SPL.addWidget(self.footer.widget)
 
-        self.V_root_window_LYT = QtWidgets.QVBoxLayout(self)
-        self.V_root_window_LYT.addWidget(self._splitter_SPL)
+        _V_LYT.addWidget(self._title)
+        _V_LYT.addWidget(self._splitter_SPL)
+        self.V_root_window_LYT = _V_LYT
+
+    def _methods(self):
+        def transcode():
+            print("test")
+            #print(self.master.is_enabled)
+            #print(self.master.source)
+            #print(self.master.do_export_videos)    
+            #print(self.master.do_export_QT)
+            #print(self.master.do_export_HD)
+            #print(self.master.do_export_uncompress)
+            #print(self.master.do_export_image_sequence)
+            #print(self.master.image_sequence_path)
+
+
+        self._export_BTN.clicked.connect(transcode)
 
 
 if __name__ == "__main__":
