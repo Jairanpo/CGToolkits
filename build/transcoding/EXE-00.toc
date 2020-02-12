@@ -1,5 +1,4 @@
-('C:\\Users\\Ool '
- 'E01\\Projects\\CGToolkits\\build\\transcoding\\transcoding.exe',
+('C:\\Projects\\CGToolkits\\build\\transcoding\\transcoding.exe',
  True,
  False,
  True,
@@ -11,45 +10,36 @@
  True,
  'transcoding.pkg',
  [('PYZ-00.pyz',
-   'C:\\Users\\Ool E01\\Projects\\CGToolkits\\build\\transcoding\\PYZ-00.pyz',
+   'C:\\Projects\\CGToolkits\\build\\transcoding\\PYZ-00.pyz',
    'PYZ'),
   ('struct',
-   'C:\\Users\\Ool '
-   'E01\\Projects\\CGToolkits\\build\\transcoding\\localpycos\\struct.pyo',
+   'C:\\Projects\\CGToolkits\\conda-env\\lib\\struct.pyo',
    'PYMODULE'),
   ('pyimod01_os_path',
-   'c:\\users\\ool '
-   'e01\\projects\\cgtoolkits\\venv\\lib\\site-packages\\PyInstaller\\loader\\pyimod01_os_path.pyc',
+   'C:\\Projects\\CGToolkits\\conda-env\\lib\\site-packages\\PyInstaller\\loader\\pyimod01_os_path.pyc',
    'PYMODULE'),
   ('pyimod02_archive',
-   'c:\\users\\ool '
-   'e01\\projects\\cgtoolkits\\venv\\lib\\site-packages\\PyInstaller\\loader\\pyimod02_archive.pyc',
+   'C:\\Projects\\CGToolkits\\conda-env\\lib\\site-packages\\PyInstaller\\loader\\pyimod02_archive.pyc',
    'PYMODULE'),
   ('pyimod03_importers',
-   'c:\\users\\ool '
-   'e01\\projects\\cgtoolkits\\venv\\lib\\site-packages\\PyInstaller\\loader\\pyimod03_importers.pyc',
+   'C:\\Projects\\CGToolkits\\conda-env\\lib\\site-packages\\PyInstaller\\loader\\pyimod03_importers.pyc',
    'PYMODULE'),
   ('pyiboot01_bootstrap',
-   'c:\\users\\ool '
-   'e01\\projects\\cgtoolkits\\venv\\lib\\site-packages\\PyInstaller\\loader\\pyiboot01_bootstrap.py',
+   'C:\\Projects\\CGToolkits\\conda-env\\lib\\site-packages\\PyInstaller\\loader\\pyiboot01_bootstrap.py',
    'PYSOURCE'),
   ('pyi_rth_pyside2',
-   'c:\\users\\ool '
-   'e01\\projects\\cgtoolkits\\venv\\lib\\site-packages\\PyInstaller\\loader\\rthooks\\pyi_rth_pyside2.py',
+   'C:\\Projects\\CGToolkits\\conda-env\\lib\\site-packages\\PyInstaller\\loader\\rthooks\\pyi_rth_pyside2.py',
    'PYSOURCE'),
   ('__init__',
-   'C:\\Users\\Ool '
-   'E01\\Projects\\CGToolkits\\transcoding\\toolkit\\__init__.py',
+   'C:\\Projects\\CGToolkits\\transcoding\\toolkit\\__init__.py',
    'PYSOURCE'),
   ('transcoding.exe.manifest',
-   'C:\\Users\\Ool '
-   'E01\\Projects\\CGToolkits\\build\\transcoding\\transcoding.exe.manifest',
+   'C:\\Projects\\CGToolkits\\build\\transcoding\\transcoding.exe.manifest',
    'BINARY')],
  [],
  False,
  False,
- 1581381475,
+ 1581464393,
  [('run.exe',
-   'c:\\users\\ool '
-   'e01\\projects\\cgtoolkits\\venv\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\run.exe',
+   'C:\\Projects\\CGToolkits\\conda-env\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\run.exe',
    'EXECUTABLE')])
