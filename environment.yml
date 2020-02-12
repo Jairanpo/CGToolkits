@@ -23,7 +23,7 @@ dependencies:
   - wincertstore=0.2=py37_0
   - zlib=1.2.11=h62dcd97_3
   - pip:
-    - pyside2==5.14.1
-    - qt-py==1.2.4
-    - shiboken2==5.14.1
+      - pyside2==5.14.1
+      - qt-py==1.2.4
+      - shiboken2==5.14.1
 prefix: C:\Projects\CGToolkits\conda-env

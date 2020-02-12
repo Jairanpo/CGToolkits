@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import sys
-import subprocess
 import os
 
 import modules
@@ -8,7 +7,7 @@ import CGAgnostics.GUI as agUI
 from Qt import QtCore, QtWidgets, QtGui
 
 import transcoding.controllers as ctrl
-from transcoding.toolkit.components.source import Source
+from transcoding.components.source import Source
 
 __version__ = "1.0.0"
 
@@ -75,16 +74,20 @@ class Transcoding(agUI.ToolkitQDialog):
 
     def _methods(self):
         def transcode():
-            print("test")
-            #print(self.master.is_enabled)
-            #print(self.master.source)
-            #print(self.master.do_export_videos)    
-            #print(self.master.do_export_QT)
-            #print(self.master.do_export_HD)
-            #print(self.master.do_export_uncompress)
-            #print(self.master.do_export_image_sequence)
-            #print(self.master.image_sequence_path)
+            if self.master.is_enabled:
+                self.console.log(f"{self.master.name} is enabled", "success")
+                ctrl.video()
+            else:
+                self.console.log(
+                    f"{self.master.name} is not enabled", "success")
 
+            print(self.master.source)
+            print(self.master.do_export_videos)
+            print(self.master.do_export_QT)
+            print(self.master.do_export_HD)
+            print(self.master.do_export_uncompress)
+            print(self.master.do_export_image_sequence)
+            print(self.master.image_sequence_path)
 
         self._export_BTN.clicked.connect(transcode)
 

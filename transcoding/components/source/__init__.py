@@ -3,7 +3,9 @@ import sys
 import re
 
 from Qt import QtCore, QtWidgets, QtGui
+
 import CGAgnostics.GUI as agUI
+
 
 class Source(agUI.ToolkitQWidget):
     def __init__(self, parent, name="NO_NAME", is_file=True):
@@ -20,6 +22,10 @@ class Source(agUI.ToolkitQWidget):
         self._methods()
 
     @property
+    def name(self):
+        return self._name
+
+    @property
     def layout(self):
         return self._V_root_LYT
 
@@ -30,7 +36,7 @@ class Source(agUI.ToolkitQWidget):
 
     @property
     def is_enabled(self):
-        return self._enable_CBX.getCheckState()
+        return self._enable_CBX.isChecked()
 
     @property
     def source(self):
@@ -38,23 +44,23 @@ class Source(agUI.ToolkitQWidget):
 
     @property
     def do_export_videos(self):
-        return self._videos_CBX.getCheckState()
+        return self._videos_CBX.isChecked()
 
     @property
     def do_export_QT(self):
-        return self._QT_CBX.getCheckState()
+        return self._QT_CBX.isChecked()
 
     @property
     def do_export_HD(self):
-        return self._HD_CBX.getCheckState()
+        return self._HD_CBX.isChecked()
 
     @property
     def do_export_uncompress(self):
-        return self._UNCOMPRESS_CBX.getCheckState()
+        return self._UNCOMPRESS_CBX.isChecked()
 
     @property
     def do_export_image_sequence(self):
-        return self._image_sequence_CBX.getCheckState()
+        return self._image_sequence_CBX.isChecked()
 
     @property
     def image_sequence_path(self):
