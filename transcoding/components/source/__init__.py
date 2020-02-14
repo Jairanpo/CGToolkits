@@ -24,6 +24,10 @@ class Source(agUI.ToolkitQWidget):
     @property
     def name(self):
         return self._name
+    
+    @property
+    def filename(self):
+        return self._filename_LNE.text()
 
     @property
     def layout(self):
@@ -64,6 +68,14 @@ class Source(agUI.ToolkitQWidget):
 
     @property
     def image_sequence_path(self):
+        return self._image_sequence_foldername_LNE.text()
+
+    @property
+    def video_export_directory(self):
+        return self._video_foldername_LNE.text()
+
+    @property
+    def images_export_directory(self):
         return self._image_sequence_foldername_LNE.text()
 
     def _widgets(self):

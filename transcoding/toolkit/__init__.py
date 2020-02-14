@@ -73,21 +73,55 @@ class Transcoding(agUI.ToolkitQDialog):
         self.V_root_window_LYT = _V_LYT
 
     def _methods(self):
-        def transcode():
-            if self.master.is_enabled:
-                self.console.log(f"{self.master.name} is enabled", "success")
-                ctrl.video()
-            else:
-                self.console.log(
-                    f"{self.master.name} is not enabled", "success")
+        sources = [self.master]  # , self.generic, self.intergeneric
+        _outputs_config = {}
 
-            print(self.master.source)
-            print(self.master.do_export_videos)
-            print(self.master.do_export_QT)
-            print(self.master.do_export_HD)
-            print(self.master.do_export_uncompress)
-            print(self.master.do_export_image_sequence)
-            print(self.master.image_sequence_path)
+        def transcode():
+
+            for source in sources:
+                _video_path = os.path.join(
+                    self._export_path_LNE.text(),
+                    source.video_export_directory,
+                    "ORIGINAL",
+                    f"{source.filename}_{source.name}_ORIGINAL".upper() + ".mov")
+
+                _video_path = os.path.normpath(_video_path)
+
+                _images_path = os.path.join(
+                    self._export_path_LNE.text(),
+                    source.images_export_directory,
+                    "IMAGE_SEQUENCE",
+                    f"{source.filename}_{source.name}".upper() + "_%04d.png")
+
+                _images_path = os.path.normpath(_images_path)
+
+                if source.is_enabled:
+                    _outputs_config[source.name] = {
+                        "enable": source.do_export_videos,
+                        "ORIGINAL": {
+                            "filepath": _video_path
+                        },
+                        "QT": {
+                            "enable": source.do_export_QT,
+                            "filepath": _video_path.replace("ORIGINAL", "QT")
+                        },
+                        "HD": {
+                            "enable": source.do_export_HD,
+                            "filepath": _video_path.replace("ORIGINAL", "HD")
+                        },
+                        "UNCOMPRESS": {
+                            "enable": source.do_export_uncompress,
+                            "filepath": _video_path.replace("ORIGINAL", "UNCOMPRESS")
+                        },
+                        "images": {
+                            "enable": source.do_export_image_sequence,
+                            "filepath": _images_path
+                        }
+                    }
+                else:
+                    pass
+
+            print(_outputs_config)
 
         self._export_BTN.clicked.connect(transcode)
 
