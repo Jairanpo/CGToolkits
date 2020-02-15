@@ -71,8 +71,8 @@ class Source(agUI.ToolkitQWidget):
         return self._image_sequence_foldername_LNE.text()
 
     @property
-    def video_export_directory(self):
-        return self._video_foldername_LNE.text()
+    def videos_export_directory(self):
+        return self._videos_export_directory.text()
 
     @property
     def images_export_directory(self):
@@ -99,7 +99,7 @@ class Source(agUI.ToolkitQWidget):
 
         self._videos_CBX = agUI.ToolkitQCheckBox("Video")
         self._videos_CBX.setCheckState(QtCore.Qt.Checked)
-        self._video_foldername_LNE = agUI.ToolkitQLineEdit("Carpeta 01")
+        self._videos_export_directory = agUI.ToolkitQLineEdit("Carpeta 01 (default)")
         self._QT_CBX = agUI.ToolkitQCheckBox("QT")
         self._QT_CBX.setCheckState(QtCore.Qt.Checked)
         self._HD_CBX = agUI.ToolkitQCheckBox("HD")
@@ -110,7 +110,7 @@ class Source(agUI.ToolkitQWidget):
         self._image_sequence_CBX = agUI.ToolkitQCheckBox("Image sequence")
         self._image_sequence_CBX.setCheckState(QtCore.Qt.Checked)
         self._image_sequence_foldername_LNE = agUI.ToolkitQLineEdit(
-            "Carpeta 03")
+            "Carpeta 03 (default)")
 
     def _layouts(self):
         _V_LYT = QtWidgets.QVBoxLayout()
@@ -130,7 +130,7 @@ class Source(agUI.ToolkitQWidget):
         _Grid_LYT.addWidget(self._filename_LBL, 1, 0)
         _Grid_LYT.addWidget(self._filename_LNE, 1, 1)
         _Grid_LYT.addWidget(self._videos_CBX, 2, 0)
-        _Grid_LYT.addWidget(self._video_foldername_LNE, 2, 1)
+        _Grid_LYT.addWidget(self._videos_export_directory, 2, 1)
         _Grid_LYT.addWidget(self._QT_CBX, 2, 2)
         _Grid_LYT.addWidget(self._HD_CBX, 2, 3)
         _Grid_LYT.addWidget(self._UNCOMPRESS_CBX, 2, 4)
@@ -164,7 +164,7 @@ class Source(agUI.ToolkitQWidget):
 
         def _disable_video():
             if self._videos_CBX.isChecked():
-                self._video_foldername_LNE.setEnabled(True)
+                self._videos_export_directory.setEnabled(True)
                 self._QT_CBX.setEnabled(True)
                 self._QT_CBX.setCheckState(QtCore.Qt.Checked)
                 self._HD_CBX.setEnabled(True)
@@ -172,8 +172,8 @@ class Source(agUI.ToolkitQWidget):
                 self._UNCOMPRESS_CBX.setEnabled(True)
                 self._UNCOMPRESS_CBX.setCheckState(QtCore.Qt.Checked)
             else:
-                self._video_foldername_LNE.setEnabled(False)
-                self._video_foldername_LNE.setEnabled(False)
+                self._videos_export_directory.setEnabled(False)
+                self._videos_export_directory.setEnabled(False)
                 self._QT_CBX.setEnabled(False)
                 self._QT_CBX.setCheckState(QtCore.Qt.Unchecked)
                 self._HD_CBX.setEnabled(False)

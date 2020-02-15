@@ -76,10 +76,10 @@ class Transcoding(agUI.ToolkitQDialog):
 
     def _methods(self):
         _sources = [self.master, self.generic, self.intergeneric] 
-        _export_path = self._export_path_LNE.text()
         _config = {}
 
         def transcode():
+            _export_path = self._export_path_LNE.text()
             _messages = []
             sources = []
 
@@ -91,8 +91,9 @@ class Transcoding(agUI.ToolkitQDialog):
                 self.console.log("<h4> -> Nothing to export.</h4>", "standar")
                 return
 
-            if os.path.isdir(self._export_path_LNE.text()):
+            if os.path.isdir(_export_path):
                 _config = config.output_dictionary(sources, _export_path, _messages)
+                print(_config)
                 self.console.log_list(_messages)
             else:
                 self.console.log("<h4> -> Set your destination path first.</h4>", "warning")

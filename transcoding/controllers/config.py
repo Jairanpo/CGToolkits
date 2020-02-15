@@ -7,7 +7,7 @@ def output_dictionary(sources, export_path, messages):
     for source in sources:
             _video_path = os.path.join(
                 export_path,
-                source.video_export_directory,
+                source_folder_name(source, mode="video"),
                 "FOLDER",
                 f"{source.filename}_{source.name}_FILENAME".upper() + ".mov")
 
@@ -15,7 +15,7 @@ def output_dictionary(sources, export_path, messages):
 
             _images_path = os.path.join(
                 export_path,
-                source.images_export_directory,
+                source_folder_name(source, mode="image"),
                 "IMAGE_SEQUENCE",
                 f"{source.filename}_{source.name}".upper() + "_%04d.png")
 
@@ -82,4 +82,17 @@ def is_valid_setup(source, messages):
     result = _is_valid_source and _is_valid_filename
     
     return result
+
+def source_folder_name(source, mode="video"):
+    result = ''
+    if mode == "video":
+        if source.videos_export_directory == "":
+            result = "Carpeta 01"
+
+    elif mode == "image":
+        if source.images_export_directory == "":
+            result = "Carpeta 03"
+
+    return result
+    
         
