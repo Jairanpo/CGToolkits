@@ -75,18 +75,27 @@ class Transcoding(agUI.ToolkitQDialog):
         self.V_root_window_LYT = _V_LYT
 
     def _methods(self):
-        sources = [self.master, self.generic, self.intergeneric] 
+        _sources = [self.master, self.generic, self.intergeneric] 
         _export_path = self._export_path_LNE.text()
         _config = {}
 
         def transcode():
             _messages = []
+            sources = []
+
+            for each in _sources:
+                if each.is_enabled:
+                    sources.append(each)
+
+            if len(sources) == 0:
+                self.console.log("<h4> -> Nothing to export.</h4>", "standar")
+                return
 
             if os.path.isdir(self._export_path_LNE.text()):
                 _config = config.output_dictionary(sources, _export_path, _messages)
                 self.console.log_list(_messages)
             else:
-                self.console.log("<h3> -> Set your destination path first.</h3>", "warning")
+                self.console.log("<h4> -> Set your destination path first.</h4>", "warning")
 
         self._export_BTN.clicked.connect(transcode)
 
