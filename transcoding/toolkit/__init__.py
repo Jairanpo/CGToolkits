@@ -8,6 +8,7 @@ from Qt import QtCore, QtWidgets, QtGui
 
 import transcoding.controllers as ctrl
 from transcoding.components.source import Source
+import transcoding.controllers.config as config
 
 __version__ = "1.0.0"
 
@@ -26,14 +27,15 @@ class Transcoding(agUI.ToolkitQDialog):
         self.setWindowFlags(self.windowFlags() ^
                             QtCore.Qt.WindowContextHelpButtonHint)
         self.setWindowIcon(self._window_icon)
-        self.resize(1000, 400)
+        self.resize(1000, 1000)
+    
 
         self._widgets()
         self._layouts()
         self._methods()
 
     def _widgets(self):
-        self._title = agUI.ToolkitQLabel("<h2>Transcoding Toolkit:</h2>")
+        self._title = agUI.ToolkitQLabel("<h3>Transcoding Toolkit:</h3>")
         self._title.setStyleSheet("color:rgb(200,150,70)")
         self._splitter_SPL = agUI.ToolkitQSplitter()
         self._splitter_SPL.setOrientation(QtCore.Qt.Vertical)
@@ -73,58 +75,20 @@ class Transcoding(agUI.ToolkitQDialog):
         self.V_root_window_LYT = _V_LYT
 
     def _methods(self):
-        sources = [self.master]  # , self.generic, self.intergeneric
-        _outputs_config = {}
+        sources = [self.master, self.generic, self.intergeneric] 
+        _export_path = self._export_path_LNE.text()
+        _config = {}
 
         def transcode():
+            _messages = []
 
-            for source in sources:
-                _video_path = os.path.join(
-                    self._export_path_LNE.text(),
-                    source.video_export_directory,
-                    "ORIGINAL",
-                    f"{source.filename}_{source.name}_ORIGINAL".upper() + ".mov")
-
-                _video_path = os.path.normpath(_video_path)
-
-                _images_path = os.path.join(
-                    self._export_path_LNE.text(),
-                    source.images_export_directory,
-                    "IMAGE_SEQUENCE",
-                    f"{source.filename}_{source.name}".upper() + "_%04d.png")
-
-                _images_path = os.path.normpath(_images_path)
-
-                if source.is_enabled:
-                    _outputs_config[source.name] = {
-                        "enable": source.do_export_videos,
-                        "ORIGINAL": {
-                            "filepath": _video_path
-                        },
-                        "QT": {
-                            "enable": source.do_export_QT,
-                            "filepath": _video_path.replace("ORIGINAL", "QT")
-                        },
-                        "HD": {
-                            "enable": source.do_export_HD,
-                            "filepath": _video_path.replace("ORIGINAL", "HD")
-                        },
-                        "UNCOMPRESS": {
-                            "enable": source.do_export_uncompress,
-                            "filepath": _video_path.replace("ORIGINAL", "UNCOMPRESS")
-                        },
-                        "images": {
-                            "enable": source.do_export_image_sequence,
-                            "filepath": _images_path
-                        }
-                    }
-                else:
-                    pass
-
-            print(_outputs_config)
+            if os.path.isdir(self._export_path_LNE.text()):
+                _config = config.output_dictionary(sources, _export_path, _messages)
+                self.console.log_list(_messages)
+            else:
+                self.console.log("<h3> -> Set your destination path first.</h3>", "warning")
 
         self._export_BTN.clicked.connect(transcode)
-
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication()
