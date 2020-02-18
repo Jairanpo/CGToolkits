@@ -26,6 +26,10 @@ class Source(agUI.ToolkitQWidget):
         return self._name
     
     @property
+    def source(self):
+        return self._source_LNE.text()
+
+    @property
     def filename(self):
         return self._filename_LNE.text()
 
@@ -42,9 +46,6 @@ class Source(agUI.ToolkitQWidget):
     def is_enabled(self):
         return self._enable_CBX.isChecked()
 
-    @property
-    def source(self):
-        return self._source_LNE.text()
 
     @property
     def do_export_videos(self):

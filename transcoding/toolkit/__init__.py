@@ -8,10 +8,9 @@ from Qt import QtCore, QtWidgets, QtGui
 
 import transcoding.controllers as ctrl
 from transcoding.components.source import Source
-import transcoding.controllers.config as config
+import transcoding.controllers.exportSources as exportSources
 
 __version__ = "1.0.0"
-
 
 class Transcoding(agUI.ToolkitQDialog):
     def __init__(self):
@@ -75,10 +74,9 @@ class Transcoding(agUI.ToolkitQDialog):
         self.V_root_window_LYT = _V_LYT
 
     def _methods(self):
-        _sources = [self.master, self.generic, self.intergeneric] 
-        _config = {}
-
+        
         def transcode():
+            _sources = [self.master, self.generic, self.intergeneric] 
             _export_path = self._export_path_LNE.text()
             _messages = []
             sources = []
@@ -92,8 +90,8 @@ class Transcoding(agUI.ToolkitQDialog):
                 return
 
             if os.path.isdir(_export_path):
-                _config = config.output_dictionary(sources, _export_path, _messages)
-                print(_config)
+                _sources = exportSources.output_dictionary(sources, _export_path, _messages)
+                print(_sources)
                 self.console.log_list(_messages)
             else:
                 self.console.log("<h4> -> Set your destination path first.</h4>", "warning")

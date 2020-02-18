@@ -8,8 +8,6 @@ if not os.getcwd() in sys.path:
 import controllers.encode as enc
 import command_data as data
 
-print(data)
-
 class TestEncoding(unittest.TestCase):
         
     def test_command_01(self):

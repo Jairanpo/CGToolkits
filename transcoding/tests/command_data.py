@@ -61,7 +61,6 @@ test_03 = {
     "valid": False,
     "command": _command_error_message}
 
-
 # Without framerate
 test_04= {
     "config":{
@@ -102,7 +101,6 @@ test_05["command"] = (f"{ffmpeg} -n "
                     f'-crf 30 -preset "{test_05["config"]["preset"]}" '
                     f'{correct_output}')
 
-
 # Without crf
 test_06= {
     "config":{
@@ -121,8 +119,6 @@ test_06["command"] = (f"{ffmpeg} -n "
                     f'-profile:v "{test_06["config"]["profile"]}" ' 
                     f'-crf 21 -preset "{test_06["config"]["preset"]}" '
                     f'{correct_output}')
-
-
 
 # without preset
 test_07= {

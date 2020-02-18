@@ -3,6 +3,7 @@ import os
 
 def output_dictionary(sources, export_path, messages):
     result = {}
+    _unc = "UNCOMPRESS"
 
     for source in sources:
             _video_path = os.path.join(
@@ -25,6 +26,7 @@ def output_dictionary(sources, export_path, messages):
                 messages.append((f"{source.name} export configuration created.", "success"))
                 result[source.name] = {
                     "status": True,
+                    "source": source.source,
                     "video":{
                         "enable": source.do_export_videos,
                         "QT": {
@@ -37,9 +39,13 @@ def output_dictionary(sources, export_path, messages):
                         },
                         "UNCOMPRESS": {
                             "enable": source.do_export_uncompress,
-                            "source": _video_path.replace("FOLDER", "UNCOMPRESS").replace("FILENAME", "UNCOMPRESS"),
-                            "4444": _video_path.replace("FOLDER", "UNCOMPRESS").replace("FILENAME", "4444"),
-                            "H264": _video_path.replace("FOLDER", "UNCOMPRESS").replace("FILENAME", "H264"),
+                            "4444": _video_path.replace("FOLDER", _unc).replace("FILENAME", "4444"),
+                            "H264": _video_path.replace("FOLDER", _unc).replace("FILENAME", "H264"),
+                            "path": os.path.normpath(
+                                os.path.join(
+                                    export_path, 
+                                    source_folder_name(source, mode="video"), 
+                                    _unc))
                         }
                     },
                     "images": {
@@ -52,7 +58,6 @@ def output_dictionary(sources, export_path, messages):
                 result[source.name] = {
                     "status": False
                 }
-
 
     return result
 
@@ -95,4 +100,3 @@ def source_folder_name(source, mode="video"):
 
     return result
     
-        

@@ -13,6 +13,7 @@ def command(config):
         "force": True, 
         "framerate": 24,
         "source": <file path>,
+        "filter": "pad=ceil(iw/2)*2:ceil(ih/2)*2, format=yuv420p"
         "codec": "libx264",
         "profile": "4444",
         "crf": 21, 
@@ -31,7 +32,7 @@ def command(config):
         ffmpeg += ' ' + '-y'
     elif config["force"] == False :
         ffmpeg += ' ' + '-n' 
-    
+
     # Framerate:
     if "framerate" in config:
         ffmpeg += ' ' + f'-framerate {config["framerate"]}'
@@ -48,15 +49,19 @@ def command(config):
             "message": ["Invalid video source file.", "error"]}
         return result
 
+    # Filter
+    if "filter" in config:
+        ffmpeg += ' ' + f'-vf {config["filter"]}'
+
     # Codec:
     if "codec" in config:
         ffmpeg += ' ' + f'-c:v "{config["codec"]}"'
     else:
-        ffmpeg += ' ' + '-c:v "libx264"' # Default to H264
+        ffmpeg += ' ' + '-c:v libx264' # Default to H264
 
     # Profile:
     if "profile" in config:
-        ffmpeg += ' ' + f'-profile:v "{config["profile"]}"'
+        ffmpeg += ' ' + f'-profile:v {config["profile"]}'
 
     # Constant rate factor:
     if "crf" in config:
@@ -95,18 +100,3 @@ def command(config):
         
 
     return result
-
-    
-
-
-def with_sources(config, sources):
-    pass
-
-
-'''
-ffmpeg -y -framerate 30 -i "C://users//mycomputer//folder//file.mp4" 
-    -c:v prores_ks -profile:v 4444
-
-ffmpeg -y -framerate 30 -i "C://users//mycomputer//folder//file.mp4" 
--c:v libx264 -crf 21 -preset "medium"  "C://users//mycomputer//folder//output.mp4"
-'''
