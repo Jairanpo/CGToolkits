@@ -1,0 +1,38 @@
+{
+    "4444": {
+        "message": [
+            "4444 command was not created",
+            "warning"
+        ],
+        "valid": false
+    },
+    "H264": {
+        "message": [
+            "H264 command was not created",
+            "warning"
+        ],
+        "valid": false
+    },
+    "HD": {
+        "command": "C:\\Projects\\CGToolkits\\transcoding\\transcoding\\ffmpeg\\bin\\ffmpeg.exe -y -framerate 24 -i C:\\Projects\\CGToolkits\\transcoding\\tests\\videos\\EVE030.mov -c:v libx264 -crf 21 -preset \"ultrafast\" C:\\Projects\\CGToolkits\\transcoding\\tests\\videos\\Carpeta 01\\HD\\MY_FILE_NAME_HD.mov",
+        "message": [
+            "ffmpeg command created succesfully for MY_FILE_NAME_HD.mov",
+            "success"
+        ],
+        "valid": true
+    },
+    "QT": {
+        "message": [
+            "QT command was not created",
+            "warning"
+        ],
+        "valid": false
+    },
+    "UNCOMPRESS": {
+        "message": [
+            "UNCOMPRESS command was not created",
+            "warning"
+        ],
+        "valid": false
+    }
+}

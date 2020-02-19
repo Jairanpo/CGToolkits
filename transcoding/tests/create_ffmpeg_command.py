@@ -1,3 +1,5 @@
+import command_data as data
+import controllers.encode as enc
 import sys
 import os
 import unittest
@@ -5,11 +7,9 @@ import unittest
 if not os.getcwd() in sys.path:
     sys.path.append(os.getcwd())
 
-import controllers.encode as enc
-import command_data as data
 
 class TestEncoding(unittest.TestCase):
-        
+
     def test_command_01(self):
         print(".-> Best case scenario")
         test = data.test_01
@@ -18,7 +18,7 @@ class TestEncoding(unittest.TestCase):
         self.assertEqual(
             enc.command(test["config"])["command"],
             test["command"]
-            )
+        )
 
     def test_command_02(self):
         print("-> Invalid source file")
@@ -46,8 +46,8 @@ class TestEncoding(unittest.TestCase):
         self.assertEqual(
             enc.command(test["config"])["command"],
             test["command"]
-            )
-    
+        )
+
     def test_command_05(self):
         print("-> Without force")
         test = data.test_05
@@ -56,7 +56,7 @@ class TestEncoding(unittest.TestCase):
         self.assertEqual(
             enc.command(test["config"])["command"],
             test["command"]
-            )
+        )
 
     def test_command_06(self):
         print("-> Without crf")
@@ -66,7 +66,7 @@ class TestEncoding(unittest.TestCase):
         self.assertEqual(
             enc.command(test["config"])["command"],
             test["command"]
-            )
+        )
 
     def test_command_07(self):
         print("-> Without preset")
@@ -76,7 +76,8 @@ class TestEncoding(unittest.TestCase):
         self.assertEqual(
             enc.command(test["config"])["command"],
             test["command"]
-            )
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

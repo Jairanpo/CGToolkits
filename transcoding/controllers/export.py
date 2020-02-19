@@ -1,32 +1,21 @@
-import controllers.encode 
+import os
+import controllers.encode as encode
 
-def is_export_video_enabled(source):
-    if source["video"]["enable"]:
-        return True
+
+def created(format, status, created=True):
+    if created:
+        return {
+            "valid": True,
+            "message": [f"{format} command was created", status]
+        }
     else:
-        return False
-
-def is_export_UNCOMPRESS_enabled(source):
-    if source["video"]["UNCOMPRESS"]["enable"]:
-        return True
-    else:
-        return False
-
-def is_export_QT_enabled(source):
-    if source["video"]["QT"]["enable"]:
-        return True
-    else:
-        return False
-
-def is_export_HD_enabled(source):
-    if source["video"]["HD"]["enable"]:
-        return True
-    else:
-        return False
+        return {
+            "valid": False,
+            "message": [f"{format} command was not created", status]
+        }
 
 
-
-def with_sources(list_of_sources):
+def with_source(source):
     '''
         list_of_sources = [{
             "status": <Boolean>,
@@ -53,58 +42,124 @@ def with_sources(list_of_sources):
             }
         }, ]
     '''
-
     result = {}
     _transcoding_config = {
         "4444": {
-            "force": True, 
+            "force": True,
             "framerate": 24,
             "codec": "prores_ks",
             "profile": 4444,
             "filter": "pad=ceil(iw/2)*2:ceil(ih/2)*2, format=yuv420p",
+            "output": ""
         },
-        "H264":{
-            "force": True, 
+        "H264": {
+            "force": True,
             "framerate": 24,
-            "codec": "libx264"
+            "codec": "libx264",
+            "output": ""
+        },
+        "UNCOMPRESS": {
+            "force": True,
+            "framerate": 24,
+            "codec": "libx264",
+            "preset": "ultrafast",
+            "output": ""
+        },
+        "QT": {
+            "force": True,
+            "framerate": 24,
+            "codec": "libx264",
+            "preset": "ultrafast",
+            "output": ""
+        },
+        "HD": {
+            "force": True,
+            "framerate": 24,
+            "codec": "libx264",
+            "preset": "ultrafast",
+            "output": ""
         }
     }
 
-    for source in list_of_sources:
-        
-        if source["status"]:
+    _transcoding_config["UNCOMPRESS"]["source"] = source["source"]
+    _transcoding_config["UNCOMPRESS"]["output"] = source["video"]["UNCOMPRESS"]["output"]
 
-            # Setting the source and output for the H264 and 4444 config dictionaries: 
-            _transcoding_config["H264"]["source"] = source["source"]
-            _transcoding_config["4444"]["source"] = source["source"]
-            _transcoding_config["4444"]["output"] = source["UNCOMPRESS"]["4444"]
-            _transcoding_config["H264"]["output"] = source["UNCOMPRESS"]["H264"]
-            _transcoding_config["UNCOMPRESS"]["path"] = source["UNCOMPRESS"]["path"]
-            
-            if is_export_UNCOMPRESS_enabled(source):
-                os.makedirs(_transcoding_config["UNCOMPRESS"]["path"])
-                result["4444"] = enconde.command(_transcoding_config["4444"])
-                result["H264"] = enconde.command(_transcoding_config["H264"])
+    _transcoding_config["H264"]["source"] = source["source"]
+    _transcoding_config["H264"]["output"] = source["video"]["UNCOMPRESS"]["H264"]
 
-                if is_export_QT_enabled(source):
-                    result["QT"] = f'copy {transcoding_config["H264"]["source"]} {source["QT"]["filepath"]}'
-                else:
-                    pass
+    _transcoding_config["4444"]["source"] = source["source"]
+    _transcoding_config["4444"]["output"] = source["video"]["UNCOMPRESS"]["4444"]
 
-                if is_export_HD_enabled(source):
-                    result["HD"] = f'copy {transcoding_config["H264"]["source"]} {source["HD"]["filepath"]}'
-                else:
-                    pass
+    _transcoding_config["QT"]["source"] = source["source"]
+    _transcoding_config["QT"]["output"] = source["video"]["QT"]["output"]
 
-            else:
-                if is_export_QT_enabled(source) and not is_export_HD_enabled(source):
-                    os.makedirs(os.path.dirname(source["QT"]["filepath"]))
-                    result["QT"] = enconde.command(_transcoding_config["H264"])
+    _transcoding_config["HD"]["source"] = source["source"]
+    _transcoding_config["HD"]["output"] = source["video"]["HD"]["output"]
 
-                elif is_export_QT_enabled(source) and is_export_HD_enabled(source):
-                    os.makedirs(os.path.dirname(source["HD"]["filepath"]))
-                    result["HD"] = enconde.command(_transcoding_config["H264"])
+    if source["video"]["UNCOMPRESS"]["enable"]:
+            # Setting the source and output for the H264 and 4444 config dictionaries:
+
+        result["4444"] = created("4444", "success")
+        result["4444"]["command"] = encode.command(
+            _transcoding_config["4444"])["command"]
+
+        result["H264"] = created("H264", "success")
+        result["H264"]["command"] = encode.command(
+            _transcoding_config["H264"])["command"]
+
+        result["UNCOMPRESS"] = created("UNCOMPRESS", "success")
+        result["UNCOMPRESS"]["command"] = encode.command(
+            _transcoding_config["UNCOMPRESS"])["command"]
+
+# Create with UNCOMPRESS, QT and HD ----------------------------------------------------------------------
+        if source["video"]["QT"]["enable"]:
+            result["QT"] = created("QT", "success")
+            result["QT"]["command"] = f'copy {_transcoding_config["H264"]["output"]} {source["video"]["QT"]["output"]}'
         else:
-            result.append(["No video was exported", "standar"])
+            result["QT"] = created("QT", "warning", created=False)
+
+        if source["video"]["HD"]["enable"]:
+            result["HD"] = created("HD", "success")
+            result["HD"]["command"] = f'copy {_transcoding_config["H264"]["output"]} {source["video"]["HD"]["output"]}'
+        else:
+            result["HD"] = created("HD", "warning", created=False)
+
+
+# Create without UNCOMPRESS but with QT and HD ----------------------------------------------------------
+    elif not source["video"]["UNCOMPRESS"]["enable"] and (source["video"]["QT"]["enable"] and source["video"]["HD"]["enable"]):
+        result["QT"] = encode.command(_transcoding_config["QT"])
+        result["HD"] = encode.command(_transcoding_config["HD"])
+        result["QT"] = created("QT", "success")
+        result["HD"] = created("HD", "success")
+        result["UNCOMPRESS"] = created("UNCOMPRESS", "warning", created=False)
+        result["H264"] = created("H264", "warning", created=False)
+        result["4444"] = created("4444", "warning", created=False)
+
+
+# Create without UNCOMPRESS and HD but with QT ----------------------------------------------------------
+    elif (not source["video"]["UNCOMPRESS"]["enable"] and not source["video"]["HD"]["enable"]) and source["video"]["QT"]["enable"]:
+        result["QT"] = encode.command(_transcoding_config["QT"])
+        result["HD"] = created("HD", "warning", created=False)
+        result["UNCOMPRESS"] = created("UNCOMPRESS", "warning", created=False)
+        result["H264"] = created("H264", "warning", created=False)
+        result["4444"] = created("4444", "warning", created=False)
+
+
+# Create without UNCOMPRESS and QT but with HD ----------------------------------------------------------
+    elif (not source["video"]["UNCOMPRESS"]["enable"] and not source["video"]["QT"]["enable"]) and source["video"]["HD"]["enable"]:
+        result["HD"] = encode.command(_transcoding_config["HD"])
+        result["QT"] = created("QT", "warning", created=False)
+        result["UNCOMPRESS"] = created("UNCOMPRESS", "warning", created=False)
+        result["H264"] = created("H264", "warning", created=False)
+        result["4444"] = created("4444", "warning", created=False)
+
+
+# Create without UNCOMPRESS, QT and HD ----------------------------------------------------------
+    else:
+        result["HD"] = created("HD", "warning", created=False)
+        result["QT"] = created("QT", "warning", created=False)
+        result["UNCOMPRESS"] = created("UNCOMPRESS", "warning", created=False)
+        result["H264"] = created("H264", "warning", created=False)
+        result["4444"] = created("4444", "warning", created=False)
 
     return result
