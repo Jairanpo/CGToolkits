@@ -21,6 +21,13 @@
         ],
         "valid": true
     },
+    "PNG": {
+        "message": [
+            "PNG command was not created",
+            "warning"
+        ],
+        "valid": false
+    },
     "QT": {
         "message": [
             "QT command was not created",

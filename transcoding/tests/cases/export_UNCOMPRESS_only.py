@@ -51,8 +51,20 @@ case = {
             "Carpeta 01",
             "HD",
             f'{_filename}_HD.mov'
+        ),
+        "PNG": os.path.join(
+            "C:\\Projects\\CGToolkits\\transcoding\\tests\\videos",
+            "Carpeta 03",
+            "IMAGE_SEQUENCE",
+            f'{_filename}_%04d.mov'
         )
-    }}
+    }
+}
+
+case["PNG"] = {
+    "valid": False,
+    "message": ["PNG command was not created", "warning"]
+}
 
 case["config"] = {
     'status': True,
@@ -76,7 +88,9 @@ case["config"] = {
     },
     'images': {
         'enable': False,
-    }}
+        'output': case["outputs"]["PNG"]
+    }
+}
 
 case["UNCOMPRESS"] = {
     "valid": True,

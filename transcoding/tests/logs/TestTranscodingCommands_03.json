@@ -20,6 +20,13 @@
         ],
         "valid": false
     },
+    "PNG": {
+        "message": [
+            "PNG command was not created",
+            "warning"
+        ],
+        "valid": false
+    },
     "QT": {
         "command": "C:\\Projects\\CGToolkits\\transcoding\\transcoding\\ffmpeg\\bin\\ffmpeg.exe -y -framerate 24 -i C:\\Projects\\CGToolkits\\transcoding\\tests\\videos\\EVE030.mov -c:v libx264 -crf 21 -preset \"ultrafast\" C:\\Projects\\CGToolkits\\transcoding\\tests\\videos\\Carpeta 01\\QT\\MY_FILE_NAME_QT.mov",
         "message": [

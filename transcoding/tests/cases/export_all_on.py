@@ -51,6 +51,12 @@ case = {
             "Carpeta 01",
             "HD",
             f'{_filename}_HD.mov'
+        ),
+        "PNG": os.path.join(
+            "C:\\Projects\\CGToolkits\\transcoding\\tests\\videos",
+            "Carpeta 03",
+            "IMAGE_SEQUENCE",
+            f'{_filename}_%04d.mov'
         )
     }}
 
@@ -97,15 +103,29 @@ case["4444"] = {
                 f'{case["outputs"]["4444"]}'
                 )}
 
+
 case["QT"] = {
     "valid": True,
     "message": ["QT command was created", "success"],
     "command": f'copy {case["outputs"]["H264"]} {case["outputs"]["QT"]}'}
 
+
 case["HD"] = {
     "valid": True,
     "message": ["HD command was created", "success"],
     "command": f'copy {case["outputs"]["H264"]} {case["outputs"]["HD"]}'}
+
+
+case["PNG"] = {
+    "valid": True,
+    "message": ["PNG command was created", "success"],
+    "command": (f'{ffmpeg} '
+                f'-i {correct_source} '
+                f'{case["outputs"]["PNG"]}'
+                )
+}
+
+
 
 case["config"] = {
     'status': True,
@@ -128,5 +148,7 @@ case["config"] = {
         },
     },
     'images': {
-        'enable': False,
-    }}
+        'enable': True,
+        'output': case["outputs"]["PNG"]
+    }
+}

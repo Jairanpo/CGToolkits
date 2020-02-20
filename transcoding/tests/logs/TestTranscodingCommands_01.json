@@ -23,6 +23,14 @@
         ],
         "valid": true
     },
+    "PNG": {
+        "command": "C:\\Projects\\CGToolkits\\transcoding\\transcoding\\ffmpeg\\bin\\ffmpeg.exe -y -i C:\\Projects\\CGToolkits\\transcoding\\tests\\videos\\EVE030.mov C:\\Projects\\CGToolkits\\transcoding\\tests\\videos\\Carpeta 03\\IMAGE_SEQUENCE\\MY_FILE_NAME_%04d.mov",
+        "message": [
+            "ffmpeg command created succesfully for MY_FILE_NAME_%04d.mov",
+            "success"
+        ],
+        "valid": true
+    },
     "QT": {
         "command": "copy C:\\Projects\\CGToolkits\\transcoding\\tests\\videos\\Carpeta 01\\UNCOMPRESS\\MY_FILE_NAME_H264.mov C:\\Projects\\CGToolkits\\transcoding\\tests\\videos\\Carpeta 01\\QT\\MY_FILE_NAME_QT.mov",
         "message": [
