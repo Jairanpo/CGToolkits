@@ -8,7 +8,14 @@ from Qt import QtCore, QtWidgets, QtGui
 
 import transcoding.controllers as ctrl
 from transcoding.components.source import Source
-import transcoding.controllers.exportSources as exportSources
+import transcoding.controllers.sources as sources
+import transcoding.controllers.export as exp
+import json
+
+_logs_dir = os.path.join(os.getcwd(), "transcoding", "logs")
+if not os.path.exists(_logs_dir):
+    os.makedirs(_logs_dir)
+
 
 __version__ = "1.0.0"
 
@@ -19,7 +26,6 @@ class Transcoding(agUI.ToolkitQDialog):
         self.setWindowTitle(f"Transcoding | {__version__}")
         self._main_path = self.execution_path().replace(
             "CGAgnostics\GUI", "transcoding\\toolkit")
-        print(self._main_path)
         self._icons_path = os.path.join(self._main_path, 'icons')
         self._window_icon = QtGui.QIcon(
             os.path.join(self._icons_path, "video.ico"))
@@ -79,24 +85,55 @@ class Transcoding(agUI.ToolkitQDialog):
             _sources = [self.master, self.generic, self.intergeneric] 
             _export_path = self._export_path_LNE.text()
             _messages = []
-            sources = []
+            _outputs = []
+            _commands = []
 
             for each in _sources:
                 if each.is_enabled:
-                    sources.append(each)
+                    _outputs.append(each)
 
-            if len(sources) == 0:
+            if len(_outputs) == 0:
                 self.console.log("<h4> -> Nothing to export.</h4>", "standar")
                 return
 
             if os.path.isdir(_export_path):
-                _sources = exportSources.output_dictionary(sources, _export_path, _messages)
-                print(_sources)
+                _outputs = sources.outputs(_outputs, _export_path, _messages)
+                for val in _outputs.values():
+                    self.create_folders_from_config_file(val)
+                    _commands.append(exp.with_source(val))
+                    
+
                 self.console.log_list(_messages)
             else:
                 self.console.log("<h4> -> Set your destination path first.</h4>", "warning")
+            
+
+            with open(os.path.join(_logs_dir, "_01_outputs.json"), "w") as fp:
+                json.dump(_outputs, fp, indent=4, sort_keys=True)
+
+            with open(os.path.join(_logs_dir, "_02_commands.json"), "w") as fp:
+                json.dump(_commands, fp, indent=4, sort_keys=True)
 
         self._export_BTN.clicked.connect(transcode)
+
+    @staticmethod
+    def create_folders_from_config_file(config):
+        print(f'VALUES: {config["images"]["enable"]}')
+        if config["images"]["enable"]:
+            os.makedirs(os.path.dirname(config["images"]["output"]))
+
+        if config["video"]["UNCOMPRESS"]["enable"]:
+            os.makedirs(os.path.dirname(config["video"]["UNCOMPRESS"]["output"]))
+
+        if config["video"]["QT"]["enable"]:
+            os.makedirs(os.path.dirname(config["video"]["QT"]["output"]))
+
+        if config["video"]["HD"]["enable"]:
+            os.makedirs(os.path.dirname(config["video"]["HD"]["output"]))
+
+    
+
+        
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication()

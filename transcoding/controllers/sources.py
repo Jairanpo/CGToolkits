@@ -2,7 +2,7 @@
 import os
 
 
-def output_dictionary(sources, export_path, messages):
+def outputs(sources, export_path, messages):
     result = {}
     _unc = "UNCOMPRESS"
 
@@ -27,7 +27,7 @@ def output_dictionary(sources, export_path, messages):
             messages.append(
                 (f"{source.name} export configuration created.", "success"))
             result[source.name] = {
-                "status": True,
+                "enable": True,
                 "source": source.source,
                 "video": {
                     "enable": source.do_export_videos,
@@ -55,7 +55,7 @@ def output_dictionary(sources, export_path, messages):
             messages.append(
                 (f"{source.name} export configuration not created.", "warning"))
             result[source.name] = {
-                "status": False
+                "enable": False
             }
 
     return result

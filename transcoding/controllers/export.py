@@ -1,5 +1,5 @@
 import os
-import controllers.encode as encode
+import transcoding.controllers.encode as encode
 
 
 def created(format, status, created=True):
@@ -18,7 +18,7 @@ def created(format, status, created=True):
 def with_source(source):
     '''
         list_of_sources = [{
-            "status": <Boolean>,
+            "enable": <Boolean>,
             "video":{
                 "enable": <Boolean>,
                 "QT": {
