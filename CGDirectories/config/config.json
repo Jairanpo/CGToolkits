@@ -1,0 +1,203 @@
+{
+  "users": [
+    "jair",
+    "outsource",
+    "emano",
+    "oliver",
+    "edgarin",
+    "cass",
+    "eduardo",
+    "joules",
+    "susie",
+    "miguel"
+  ],
+  "vfx_users": [
+    "Houdini",
+    "Maya",
+    "Cinema4D",
+    "RealFlow"
+  ],
+  "shot_steps": [
+    "01_Audio",
+    "02_Footage",
+    "03_Tracking",
+    "04_Layout",
+    "05_Animation",
+    "06_VFX",
+    "07_Assembly",
+    "08_Lighting",
+    "09_Render",
+    "10_Compositing"
+  ],
+  "simple": {
+    "reviews": {
+      "name": "Reviews",
+      "subfolders": [
+        "Client",
+        "Ool"
+      ]
+    },
+    "sequence": {
+      "name": "Sequence",
+      "subfolders": false
+    },
+    "assets": {
+      "name": "Assets",
+      "subfolders": false
+    },
+    "timetable": {
+      "name": "Timetable",
+      "subfolders": false
+    },
+    "art": {
+      "name": "Art",
+      "subfolders": [
+        "Storyboard",
+        "ConceptDesign",
+        "Animatic",
+        "Graphics",
+        "References"
+      ]
+    },
+    "client": {
+      "name": "Client",
+      "subfolders": [
+        "Brief",
+        "References",
+        "Timetable",
+        "Sources",
+        "Feedback",
+        "Meetings"
+      ]
+    },
+    "audio": {
+      "name": "Audio",
+      "subfolders": [
+        "SoundDesign",
+        "Music"
+      ]
+    },
+    "final": {
+      "name": "Final",
+      "subfolders": [
+        "Formats",
+        "Videos"
+      ]
+    }
+  },
+  "agUIlex": {
+    "projects": {
+      "name": "Projects",
+      "subfolders": false
+    },
+    "assets": {
+      "name": "Assets",
+      "subfolders": false
+    },
+    "timetable": {
+      "name": "Timetable",
+      "subfolders": false
+    },
+    "client": {
+      "name": "Client",
+      "subfolders": [
+        "Brief",
+        "References",
+        "Timetable",
+        "Sources",
+        "Feedback",
+        "Meetings"
+      ]
+    },
+    "final": {
+      "name": "Final",
+      "subfolders": false
+    }
+  },
+  "standalone_project": {
+    "final": {
+      "name": "Final",
+      "subfolders": false
+    },
+    "sequence": {
+      "name": "Sequence",
+      "subfolders": false
+    },
+    "art": {
+      "name": "Art",
+      "subfolders": [
+        "Storyboard",
+        "ConceptDesign",
+        "Animatic",
+        "Graphics",
+        "References"
+      ]
+    },
+    "audio": {
+      "name": "Audio",
+      "subfolders": [
+        "SoundDesign",
+        "Music"
+      ]
+    },
+    "review": {
+      "name": "Review",
+      "subfolders": [
+        "Client",
+        "Ool"
+      ]
+    }
+  },
+  "workarea": [
+    "Playground",
+    "Publish"
+  ],
+  "assets": {
+    "environments": {
+      "name": "Environments",
+      "subfolders": [
+        "Exteriors",
+        "Interiors",
+        "MattePaintings",
+        "HDRs",
+        "SetDressing"
+      ]
+    },
+    "fx": {
+      "name": "FX",
+      "subfolders": false
+    },
+    "props": {
+      "name": "Props",
+      "subfolders": [
+        "Hats",
+        "Glasses",
+        "Tops",
+        "Bottoms",
+        "Shoes",
+        "Accessories",
+        "Weapons",
+        "Misc",
+        "Tools"
+      ]
+    },
+    "vehicles": {
+      "name": "Vehicles",
+      "subfolders": false
+    },
+    "characters": {
+      "name": "Characters",
+      "subfolders": false
+    }
+  },
+  "assets_steps": [
+    "01_Artwork",
+    "02_Modeling",
+    "03_Rigging",
+    "04_Textures",
+    "05_Shading",
+    "06_Animation",
+    "07_FX",
+    "08_Cache"
+  ]
+}

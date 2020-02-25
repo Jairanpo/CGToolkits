@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sequence creation documentation</title>
+</head>
+<body>
+    <h3>Sequence creation</h3>
+    <p>
+        In this tab you can create the sequence for the project, the sequence creator<br>
+        is agUIosed of 5 folders: Client, Creative, Production, Sequence and Editorial.
+        <ul>
+            <li>Client: <i>In this folder we store the inputs from the clients, this can be references, reviews or documents.</li>
+            <li>Creative: <i>In this folder the creative departmet will store the reference content for the artist in the pipeline.</li>
+            <li>Production: <i>This folders are for the production team, they can store time-tables, documents or links.</li>
+            <li>Editorial: <i>Here we store the encoded video outputs from the pipeline to deliver to the client.</li>
+            <li>Sequence: <i>Here will be all the shots that conform the sequence, each shot with their respective pipeline step.</li>
+        </ul>
+    </p>
+    <h4>Help:</h4>
+    <ul>
+        <li>Year and suffix are optional parameters.</li>
+        <li>Every word will be converted to PascalCase format: "test sequence" -> "TestSequence".</li>
+        <li>Spaces at the end of a word will be eliminated.</li>
+        <li>Spaces at the middle of a word will be replaced(do not use them): "my sequence" -> "My_sequence".</li>
+        <li>Every field will be capitalized and joined at the end:<br>
+            year=<b>"2019"</b>, prefix=<b>"bimbopolis"</b>, name=<b>"nito"</b>, suffix=<b>"develacion"</b> -> <b>"2019BimbopolisNitoDevelacion".</b>
+        </li>
+        <li>Shot code and shot amount are obligatory, add at least one(you can add more later if necessary.)</li>
+    </ul>
+</body>
+</html>

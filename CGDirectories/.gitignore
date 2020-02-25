@@ -1,0 +1,14 @@
+
+.idea/workspace.xml
+*.xml
+
+build/
+.idea/workspace.xml
+*.xml
+dist/OolDirectories-1.0-amd64.msi
+
+__pycache__
+
+venv
+
+dist

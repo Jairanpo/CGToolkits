@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shot creation documentation</title>
+</head>
+<body>
+    <h3>Shot creation</h3>
+    <p>
+        In this tab you can create individual shots for the project, each shot is agUIosed of 6 pipeline steps:<br>
+        01_Previs, 02_Animation, 03_VFX, 04_Layout, 05_Lighting and 06_agUIositing.
+        <ul>
+            <li>01_Previs: <i>Previs is the process where we create the editing and camera work that will ignite the production of a shot.</i></li>
+            <li>02_Animation: <i>Here we will design the movements or actions using assets configured for it.</i></li>
+            <li>03_VFX: <i>Smoke, fire, water, cloth, grass or any other simulation that the shot might need.</i></li>
+            <li>04_Layout: <i>Here everything comes together. Cameras from previs and alembic caches from VFX and Animation.</i></li>
+            <li>05_Lighting: <i>Stablish of lighting conditions that the shot will need and its respective render passes.</i></li>
+            <li>06_agUIositing: <i>agUIosition of the render passes.</i></li>
+        </ul>
+    </p>
+    <h4>Help:</h4>
+    <ul>
+        <li>The shot code has to be two characters long.</li>
+        <li>The maximum numbers of shots a sequence can have its 99.</li>
+        <li>We use shot increments of ten for the shot nomenclature, so shot 1 will be shot 10, shot 2 will be shot 20</li>
+        <li>If at any point a shot is needed between shot 10 and 20, we have to a create shot 15("SH010", "SH015", "SH020")</li>
+        <li>The shot will be padded with zeroes depending on the number, for example: <br>
+            - shotcode = <b>"sh"</b>, number = <b>"5"</b>  -> <b>"SH050"</b><br>
+            - shotcode = <b>"sh"</b>, number = <b>"50"</b> -> <b>"SH500"</b><br>
+        </li>
+    </ul>
+</body>
+</html>
