@@ -137,10 +137,12 @@ class Source(agUI.ToolkitQWidget):
         _Grid_LYT.addWidget(self._UNCOMPRESS_CBX, 2, 4)
         _Grid_LYT.addWidget(self._image_sequence_CBX, 3, 0)
         _Grid_LYT.addWidget(self._image_sequence_foldername_LNE, 3, 1)
+        _Grid_LYT.setContentsMargins(0,0,0,0)
 
         self._content_WGT.setLayout(_Grid_LYT)
         _H_LYT.addWidget(self._content_WGT)
         _V_LYT.addLayout(_H_LYT)
+        
 
         self._V_root_LYT = _V_LYT
 

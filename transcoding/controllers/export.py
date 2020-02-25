@@ -42,6 +42,9 @@ def with_source(source):
             }
         }, ]
     '''
+    if "source" not in source:
+        return {"enable": False, "message": ["No source key provided", "error"]}
+
     result = {}
     _transcoding_config = {
         "4444": {

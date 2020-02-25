@@ -25,8 +25,9 @@ def outputs(sources, export_path, messages):
 
         if is_valid_setup(source, messages):
             messages.append(
-                (f"{source.name} export configuration created.", "success"))
+                (f'<img src="./icons/check_XS.png"></img> - {source.name} export configuration created.', "success"))
             result[source.name] = {
+                "name": source.name,
                 "enable": True,
                 "source": source.source,
                 "video": {
@@ -53,9 +54,10 @@ def outputs(sources, export_path, messages):
             }
         else:
             messages.append(
-                (f"{source.name} export configuration not created.", "warning"))
+                (f'<img src="./icons/warning_XS.png"></img> - {source.name} export configuration not created.', "warning"))
             result[source.name] = {
-                "enable": False
+                "enable": False,
+                "name": source.name
             }
 
     return result
@@ -66,18 +68,18 @@ def is_valid_setup(source, messages):
 
     def is_valid_source():
         if os.path.isfile(source.source):
-            messages.append((f"{source.name} source is valid.", "success"))
+            messages.append((f'<img src="./icons/check_XS.png"></img> - {source.name} source is valid.', "success"))
             return True
         else:
-            messages.append((f"{source.name} source is invalid.", "error"))
+            messages.append((f'<img src="./icons/x_XS.png"></img> - {source.name} source is invalid.', "error"))
             return False
 
     def is_valid_filename():
         if len(source.filename) > 0:
-            messages.append((f"{source.name} filename is valid.", "success"))
+            messages.append((f'<img src="./icons/check_XS.png"></img> - {source.name} filename is valid.', "success"))
             return True
         else:
-            messages.append((f"{source.name} filename is invalid.", "error"))
+            messages.append((f'<img src="./icons/x_XS.png"></img> - {source.name} filename is invalid.', "error"))
             return False
 
     _is_valid_source = is_valid_source()
@@ -93,9 +95,13 @@ def source_folder_name(source, mode="video"):
     if mode == "video":
         if source.videos_export_directory == "":
             result = "Carpeta 01"
+        else:
+            result = source.videos_export_directory
 
     elif mode == "image":
         if source.images_export_directory == "":
             result = "Carpeta 03"
+        else:
+            result = source.images_export_directory
 
     return result
