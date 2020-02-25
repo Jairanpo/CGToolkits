@@ -109,7 +109,7 @@ class Transcoding(agUI.ToolkitQDialog):
                 _messages.append(
                     ["<h4>Directories creation:</h4>", "standar"])
                 for val in _outputs.values():
-                    _msg = self.create_folders_from_config_file(val, _messages)
+                    self.create_folders_from_config_file(val, _messages)
 
                     self.console.log_list(_messages)
                     _commands.append(exp.with_source(val))
