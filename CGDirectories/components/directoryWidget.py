@@ -7,7 +7,7 @@ from PySide2 import QtWidgets, QtCore, QtGui
 
 # Project
 import CGAgnostics.GUI as agUI
-import CGDirectories.controllers.paths.execution as execution
+import controllers.paths.execution as execution
 
 
 class DirectoryWidget:

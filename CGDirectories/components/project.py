@@ -6,10 +6,10 @@ import os
 from PySide2 import QtWidgets, QtCore, QtGui
 
 # Project
-from CGDirectories.components.directoryWidget import DirectoryWidget as DirectoryWidget
 import CGAgnostics.GUI as agUI
-import CGDirectories.controllers.shots as shots
-import CGDirectories.controllers.project as project
+from components.directoryWidget import DirectoryWidget as DirectoryWidget
+import controllers.shots as shots
+import controllers.project as project
 
 
 class Project(DirectoryWidget):

@@ -1,9 +1,9 @@
 import os
 
-import CGDirectories.config as config
-import CGDirectories.controllers.assets as assets
-import CGDirectories.controllers.shots as shots
-import CGDirectories.controllers.workarea as workarea
+import config as config
+import controllers.assets as assets
+import controllers.shots as shots
+import controllers.workarea as workarea
 
 
 def create_subfolders_with_workarea(path, config, key):

@@ -3,15 +3,10 @@
 block_cipher = None
 
 
-a = Analysis(['dirGUI.py'],
-             pathex=['C:\\Users\\Ool E01\\Projects\\CGDirectories'],
+a = Analysis(['_CGDirectories.spec'],
+             pathex=['C:\\Projects\\CGToolkits\\CGDirectories'],
              binaries=[],
-             datas=[
-                 ('docs/*.html', '.'),
-                 ('icons/*.ico', 'icons'), 
-                 ('layouts/icons/*.ico', 'layouts/icons'),
-                 ('CGAgnostics/icons/*.ico', 'GCAgnostics/icons'),
-                 ('config/*.json', 'config')],
+             datas=[],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -26,13 +21,12 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='dirGUI',
+          name='_CGDirectories.spec',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=False,
-          icon='icons\\icon.ico')
+          console=True )
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
@@ -40,4 +34,4 @@ coll = COLLECT(exe,
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='dirGUI')
+               name='_CGDirectories.spec')

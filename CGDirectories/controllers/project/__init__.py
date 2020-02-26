@@ -1,9 +1,9 @@
 
 import os
-import CGDirectories.config as config
 
-import CGDirectories.controllers.shots as shots
-import CGDirectories.controllers.utilities as utils
+import config as config
+import controllers.shots as shots
+import controllers.utilities as utils
 
 
 def create(path, shots_data):

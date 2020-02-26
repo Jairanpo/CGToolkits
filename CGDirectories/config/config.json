@@ -85,7 +85,7 @@
       ]
     }
   },
-  "agUIlex": {
+  "composed": {
     "projects": {
       "name": "Projects",
       "subfolders": false

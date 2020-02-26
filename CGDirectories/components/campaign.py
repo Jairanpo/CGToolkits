@@ -1,15 +1,17 @@
 # Standar library
 import sys
 import os
+import datetime
+
 
 # Third party
 from PySide2 import QtWidgets, QtCore, QtGui
 
 # Project
-from CGDirectories.components.directoryWidget import DirectoryWidget as DirectoryWidget
+from components.directoryWidget import DirectoryWidget as DirectoryWidget
 import CGAgnostics.GUI as agUI
-import CGDirectories.controllers.shots as shots
-import CGDirectories.controllers.campaign as campaign
+import controllers.shots as shots
+import controllers.campaign as campaign
 
 
 class Campaign(DirectoryWidget):
@@ -45,10 +47,15 @@ class Campaign(DirectoryWidget):
         self._subprojects_amount_SBX.setMinimum(1)
         self._subprojects_amount_SBX.setMaximum(20)
 
+        self._agency_LNE = agUI.ToolkitQLineEdit()
+        self._agency_LNE.setPlaceholderText("Agency name")
+
         self._project_year_LNE = agUI.ToolkitQLineEdit()
-        self._project_year_LNE.setPlaceholderText('Year (optional)')
-        year_validator = QtGui.QIntValidator()
+        now = datetime.datetime.now()
+        year_validator = QtGui.QRegExpValidator()
+        year_validator.setRegExp(r"[0-9]{4}")
         self._project_year_LNE.setValidator(year_validator)
+        self._project_year_LNE.setText(str(now.year))
 
         fields_validator = QtGui.QRegExpValidator()
         fields_validator.setRegExp(r"[a-zA-Z]{20}")
@@ -83,6 +90,11 @@ class Campaign(DirectoryWidget):
         _H_project_type_LYT.addWidget(self._subprojects_amount_SBX)
         _H_project_type_LYT.addStretch()
 
+        _H_agency_name_LYT = QtWidgets.QHBoxLayout()
+        _H_agency_name_LYT.addStretch()
+        _H_agency_name_LYT.addWidget(self._agency_LNE)
+        _H_agency_name_LYT.addStretch()
+
         _H_project_name_LYT = QtWidgets.QHBoxLayout()
         _H_project_name_LYT.addWidget(self._project_year_LNE)
         _H_project_name_LYT.addWidget(self._project_prefix_LNE)
@@ -98,6 +110,7 @@ class Campaign(DirectoryWidget):
         _V_project_LYT = QtWidgets.QVBoxLayout()
         _V_project_LYT.addLayout(self.savepath_layout)
         _V_project_LYT.addLayout(_H_project_type_LYT)
+        _V_project_LYT.addLayout(_H_agency_name_LYT)
         _V_project_LYT.addLayout(_H_project_name_LYT)
         _V_project_LYT.addLayout(_H_shot_LYT)
 
@@ -197,7 +210,7 @@ class Campaign(DirectoryWidget):
 
     def create_sequence_strategy(self):
         if self._has_subprojects_CBX.checkState():
-            self.create_agUIlex_campaign()
+            self.create_composed_campaign()
         else:
             self.create_simple_campaign()
 
@@ -207,39 +220,54 @@ class Campaign(DirectoryWidget):
         _name = self._name_LNE.text().strip().replace(' ', '_')
         suffix = self._project_suffix_LNE.text().strip().replace(' ', '_')
 
-        shotcode = self._shotcode_LNE.text().strip().replace(' ', '_')
-        amount = self._shot_amount_SBX.value()
-        _campaign = year + prefix.capitalize() + _name.capitalize() + \
+        _data = {}
+        _data["shotcode"] = self._shotcode_LNE.text().strip().replace(' ', '_')
+        _data["amount"] = self._shot_amount_SBX.value()
+
+        _campaign = {}
+        _campaign["name"] = year + prefix.capitalize() + _name.capitalize() + \
             suffix.capitalize()
+        _campaign["agency"] = self._agency_LNE.text().upper(
+        ) if self._agency_LNE.text() != "" else "UNKNOWN"
+
         result = {"status": "", "message": ""}
 
-        if os.path.exists(os.path.join(self.savepath, _campaign)) and prefix != '' and _campaign != '':
-            self.console.log('That sequence folder already exists', "warning")
-        elif self.savepath != '' and prefix != '' and _campaign != '' and shotcode != '':
-            shots_dict = shots.create_shots_list(shotcode, amount + 1)
+        if os.path.exists(os.path.join(self.savepath, _campaign["name"])) and prefix != '' and _campaign["name"] != '':
+            self.console.log('That campaign folder already exists', "warning")
+        elif self.savepath != '' and prefix != '' and _campaign["name"] != '' and _data["shotcode"] != '':
+            print("Entering simple creation")
+    
+            shots_dict = shots.create_shots_list(
+                _data["shotcode"], _data["amount"] + 1)
 
             result = campaign.simple(self.savepath, _campaign,
-                                     shots_dict["list_of_shots"], shotcode, amount)
+                                     shots_dict["list_of_shots"], _data)
 
             self.console.log(result["message"], result["status"])
         else:
             self.console.log('''
-                            Unable to create sequence folders...
-                            check the following issues:
-                                - Save location path.
-                                - Sequence naming(year, prefix, name, suffix).
-                                - Shot code.
-                                - Amount of shots.
+                            <p>Unable to create sequence folders:</p>
+                            <p>check the following issues:</p>
+                                <ul>
+                                <li>Save location path.</li>
+                                <li>Sequence naming(year, prefix, name, suffix).</li>
+                                <li>Shot code.</li>
+                                <li>Amount of shots.</li>
+                                </ul>
                             ''', "error")
 
-    def create_agUIlex_campaign(self):
+    def create_composed_campaign(self):
         year = self._project_year_LNE.text().strip() + "_"
         prefix = self._project_prefix_LNE.text().strip().replace(' ', '_')
         _name = self._name_LNE.text().strip().replace(' ', '_')
         suffix = self._project_suffix_LNE.text().strip().replace(' ', '_')
 
-        _campaign = year + prefix.capitalize() + _name.capitalize() + \
+        _campaign = {}
+        _campaign["name"] = year + prefix.capitalize() + _name.capitalize() + \
             suffix.capitalize()
+        _campaign["agency"] = self._agency_LNE.text().upper(
+        ) if self._agency_LNE.text() != "" else "UNKNOWN"
+        
         _matrix = []
 
         def add_number(matrix):
@@ -266,6 +294,6 @@ class Campaign(DirectoryWidget):
 
         add_number(_matrix)
 
-        result = campaign.agUIlex(self.savepath, _campaign, _matrix)
+        result = campaign.composed(self.savepath, _campaign, _matrix)
 
         self.console.log(result["message"], result["status"])

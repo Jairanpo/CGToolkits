@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
+import json
+
+from Qt import QtCore, QtWidgets, QtGui
 
 import modules
 import CGAgnostics.GUI as agUI
-from Qt import QtCore, QtWidgets, QtGui
 
 import transcoding.controllers as ctrl
 from transcoding.components.source import Source
 import transcoding.controllers.sources as sources
 import transcoding.controllers.export as exp
-import json
 
 _logs_dir = os.path.join(os.getcwd(), "transcoding", "logs")
 if not os.path.exists(_logs_dir):

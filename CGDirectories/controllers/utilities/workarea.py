@@ -1,8 +1,8 @@
 import os
-import CGDirectories.config as config
 
-import CGDirectories.controllers.assets as assets
-import CGDirectories.controllers.shots as shots
+import config as config
+import controllers.assets as assets
+import controllers.shots as shots
 import workareaDir
 
 

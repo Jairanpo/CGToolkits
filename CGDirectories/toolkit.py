@@ -4,14 +4,12 @@ import os
 
 from PySide2 import QtWidgets, QtCore, QtGui
 
-import execution
-execution.setup()
 import CGAgnostics.GUI as agUI
-from CGDirectories.components.tabs import Tabs
-from CGDirectories.components.campaign import Campaign
-from CGDirectories.components.project import Project
-from CGDirectories.components.asset import Asset
-from CGDirectories.components.shot import Shot
+from components.tabs import Tabs
+from components.campaign import Campaign
+from components.project import Project
+from components.asset import Asset
+from components.shot import Shot
 
 __author__ = "Jair Anguiano"
 __version__ = "4.2.0"
@@ -31,13 +29,13 @@ class DirectoriesGUI(agUI.ToolkitQDialog):
         self._main_path = select_correct_execution_path()
         self._icons_path = os.path.join(self._main_path, 'icons')
         self._window_icon = QtGui.QIcon(
-            os.path.join(self._icons_path, "icon.ico"))
+            os.path.join(self._icons_path, "filesystem.ico"))
         self._create_icon = QtGui.QIcon(
             os.path.join(self._icons_path, "create.ico"))
         self.setWindowFlags(self.windowFlags() ^
                             QtCore.Qt.WindowContextHelpButtonHint)
         self.setWindowIcon(self._window_icon)
-        self.setWindowTitle('Directories | v{0}'.format(__version__))
+        self.setWindowTitle(f'Directories | v{__version__}')
         self.setMinimumWidth(200)
         self.setMinimumHeight(300)
         self.resize(700, 700)

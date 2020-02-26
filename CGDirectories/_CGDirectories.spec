@@ -1,16 +1,17 @@
 # -*- mode: python ; coding: utf-8 -*-
+
 block_cipher = None
 
-agnostics_dir = os.path.join(os.getcwd(), "CGAgnostics")
-icons_dir = os.path.join(os.getcwd(), 'transcoding', "toolkit", "icons")
 
-a = Analysis([os.path.join(os.getcwd(), "transcoding", "toolkit", "__init__.py")],
-             pathex=[os.getcwd()],
+a = Analysis(['toolkit.py'],
+             pathex=['C:\\Projects\\CGToolkits\\CGDirectories'],
              binaries=[],
              datas=[
-                 ('./transcoding/ffmpeg', 'ffmpeg'),
-                 (icons_dir, 'icons')
-                 ],
+                 ('docs/*.html', '.'),
+                 ('icons/*.ico', 'icons'), 
+                 ('components/icons/*.ico', 'components/icons'),
+                 ('CGAgnostics/icons/*.ico', 'GCAgnostics/icons'),
+                 ('config/*.json', 'config')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -25,12 +26,13 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='transcoding',
+          name='CGDirectories',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=True )
+          console=False,
+          icon='icons\\icon.ico')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
@@ -38,4 +40,4 @@ coll = COLLECT(exe,
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='transcoding')
+               name='CGDirectories')

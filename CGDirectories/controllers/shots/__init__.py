@@ -1,5 +1,5 @@
 import os
-import CGDirectories.config as config
+import config as config
 
 
 def create_shot_directory_structure(path, shot_name):

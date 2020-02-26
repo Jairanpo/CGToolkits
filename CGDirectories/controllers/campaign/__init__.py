@@ -1,11 +1,11 @@
 import os
 
-import CGDirectories.config as config
-import CGDirectories.controllers.project as project
-import CGDirectories.controllers.assets as assets
-import CGDirectories.controllers.shots as shots
-import CGDirectories.controllers.utilities.subfolders as subfolders
-import CGDirectories.controllers.campaign.meta as meta
+import config as config
+import controllers.project as project
+import controllers.assets as assets
+import controllers.shots as shots
+import controllers.utilities.subfolders as subfolders
+import controllers.campaign.meta as meta
 
 
 def create_projects_matrix(path, matrix):
@@ -24,19 +24,20 @@ def create_projects_matrix(path, matrix):
         project.create(_project_path, shots_dict)
 
 
-def simple(path, campaign, list_of_shots, shot_code, shot_amount):
+def simple(path, campaign, list_of_shots, data):
     """
     Simple campaing creation
 
     Arguments:
-        path {string} -- Root path for the campaign creation, this has to be the 
+        path {string} -- Root path for the campaign creation, this has to be the
                          \"Brand\" root folder.
         campaign {string} -- Campaign name where the directory will be created.
         list_of_shots {[string]} -- [description]
     """
+
     result = {"status": "error", "message": ""}
 
-    _campaign_path = os.path.normpath(os.path.join(path, campaign))
+    _campaign_path = os.path.normpath(os.path.join(path, campaign["name"]))
 
     if os.path.exists(_campaign_path):
         result["status"] = "error"
@@ -51,7 +52,8 @@ def simple(path, campaign, list_of_shots, shot_code, shot_amount):
     _paths = {}
 
     for key in _keys:
-        _paths[key] = os.path.join(path, campaign, _config[key]["name"])
+        _paths[key] = os.path.join(
+            path, campaign["name"], _config[key]["name"])
 
         if os.path.exists(_paths[key]):
             pass
@@ -65,50 +67,59 @@ def simple(path, campaign, list_of_shots, shot_code, shot_amount):
     result["status"] = "success"
     result["message"] = f"Campaign created successfully at: {_campaign_path}"
 
-    meta.write(path, campaign, project_data={
-        "type": "simple",
-        "shots": {"code": shot_code.upper(), "amount": shot_amount}})
+    meta.write(
+        path,
+        campaign,
+        project_data={
+            "type": "simple",
+            "shots": {
+                "code": data["shotcode"].upper(),
+                "amount": data["amount"]
+            }
+        }
+    )
 
     return result
 
 
-def agUIlex(path, campaign, matrix):
+def composed(path, campaign, matrix):
     """
-    This function will create a agUIlex campaign
+    This function will create a composed campaign
 
     Arguments:
-        path {string} -- Root path for the campaign creation, this has to be the 
+        path {string} -- Root path for the campaign creation, this has to be the
                          \"Brand\" root folder.
         campaign {String} -- Campaign name where the directory will be created.
         matrix {matrix 3x3} --  [project_name, shotcode, shots_amount]
     """
     result = {"status": "error", "message": ""}
 
-    _campaign_path = os.path.normpath(os.path.join(path, campaign))
+    _campaign_path = os.path.normpath(os.path.join(path, campaign["name"]))
     if os.path.exists(_campaign_path):
         result = {"status": "error",
                   "message": "That campaign already exists."}
         return result
 
-    _config = config.get("agUIlex")
+    _config = config.get("composed")
     _keys = ["projects", "assets", "timetable", "client", "final"]
 
     _paths = {}
 
     for key in _keys:
-        _paths[key] = os.path.join(path, campaign, _config[key]["name"])
+        _paths[key] = os.path.join(
+            path, campaign["name"], _config[key]["name"])
 
         if os.path.exists(_paths[key]):
             pass
         else:
             os.makedirs(_paths[key])
             subfolders.create(
-                _paths[key], config_string="agUIlex", key=key)
+                _paths[key], config_string="composed", key=key)
 
     assets.directory(_campaign_path)
     create_projects_matrix(os.path.join(_campaign_path, "Projects"), matrix)
 
-    _project = {"type": "agUIosed", "subprojects": []}
+    _project = {"type": "composed", "subprojects": []}
 
     for subproject, code, amount in matrix:
         entry = {"name": subproject, "shots": {
@@ -116,23 +127,9 @@ def agUIlex(path, campaign, matrix):
         _project["subprojects"].append(entry)
 
     meta.write(
-        path=path, campaign=campaign, project_data=_project)
+        path=path, campaign=campaign, project_data=_project, mode="composed")
 
     result["status"] = "success"
     result["message"] = f"Campaign created successfully at: {_campaign_path}"
 
     return result
-
-
-if __name__ == '__main__':
-    path = os.getcwd()
-    sequence = input('Sequence name: ')
-    shotcode = input('Shot code (only three characters): ')
-    amount = input('How many shots you need? ')
-
-    shots = shots.create_shots_list(shotcode, amount)
-
-    if sequence and shots["exist"]:
-        simple(path, sequence, shots["list_of_shots"])
-    else:
-        print('Game over, try again!')

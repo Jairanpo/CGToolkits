@@ -1,6 +1,6 @@
 import os
-import CGDirectories.config as config
 
+import config as config
 
 def create(path):
     workarea = config.get("workarea")
