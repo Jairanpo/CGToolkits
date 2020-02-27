@@ -1,0 +1,28 @@
+{
+    "MASTER": {
+        "enable": true,
+        "images": {
+            "enable": true,
+            "output": "C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 03\\IMAGE_SEQUENCE\\TEST_MASTER_%04d.png"
+        },
+        "name": "MASTER",
+        "source": "C:/Users/Ool E01/Documents/Playblast/Everest/EVE030.mov",
+        "video": {
+            "HD": {
+                "enable": true,
+                "output": "C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 01\\HD\\TEST_MASTER_HD.mov"
+            },
+            "QT": {
+                "enable": true,
+                "output": "C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 01\\QT\\TEST_MASTER_QT.mov"
+            },
+            "UNCOMPRESS": {
+                "4444": "C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 01\\UNCOMPRESS\\TEST_MASTER_4444.mov",
+                "H264": "C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 01\\UNCOMPRESS\\TEST_MASTER_H264.mov",
+                "enable": true,
+                "output": "C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 01\\UNCOMPRESS\\TEST_MASTER_UNCOMPRESS.mov"
+            },
+            "enable": true
+        }
+    }
+}

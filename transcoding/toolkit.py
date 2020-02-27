@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
+import subprocess
 import json
+import shutil
 
 from Qt import QtCore, QtWidgets, QtGui
 
-import modules
 import CGAgnostics.GUI as agUI
+import controllers as ctrl
+from components.source import Source
+import controllers.sources as sources
+import controllers.export as exp
 
-import transcoding.controllers as ctrl
-from transcoding.components.source import Source
-import transcoding.controllers.sources as sources
-import transcoding.controllers.export as exp
-
-_logs_dir = os.path.join(os.getcwd(), "transcoding", "logs")
+_logs_dir = os.path.join(os.getcwd(), "logs")
 if not os.path.exists(_logs_dir):
     os.makedirs(_logs_dir)
 
@@ -27,7 +27,7 @@ class Transcoding(agUI.ToolkitQDialog):
 
         self.setWindowTitle(f"Transcoding | {__version__}")
         self._main_path = self.execution_path().replace(
-            "CGAgnostics\GUI", "transcoding\\toolkit")
+            "CGAgnostics\GUI", "")
         self._icons_path = os.path.join(self._main_path, 'icons')
         self._window_icon = QtGui.QIcon(
             os.path.join(self._icons_path, "video.ico"))
@@ -93,7 +93,7 @@ class Transcoding(agUI.ToolkitQDialog):
             _export_path = self._export_path_LNE.text()
             _messages = []
             _outputs = []
-            _commands = []
+            _commands_dictionary = []
 
             _messages.append(["<h4>User input:</h4>", "standar"])
 
@@ -106,25 +106,32 @@ class Transcoding(agUI.ToolkitQDialog):
                 return
 
             if os.path.isdir(_export_path):
-                _outputs = sources.outputs(_outputs, _export_path, _messages)
+                _configs = sources.outputs(_outputs, _export_path, _messages)
                 _messages.append(
                     ["<h4>Directories creation:</h4>", "standar"])
-                for val in _outputs.values():
+                for val in _configs.values():
                     self.create_folders_from_config_file(val, _messages)
 
                     self.console.log_list(_messages)
-                    _commands.append(exp.with_source(val))
+                    _commands_dictionary.append(exp.with_source(val))
 
                 self.console.log_list(_messages)
 
-                with open(os.path.join(_logs_dir, "_01_outputs.json"), "w") as fp:
-                    json.dump(_outputs, fp, indent=4, sort_keys=True)
 
-                with open(os.path.join(_logs_dir, "_02_commands.json"), "w") as fp:
-                    json.dump(_commands, fp, indent=4, sort_keys=True)
+                with open(os.path.join(_logs_dir, "_02_commands.txt"), "w") as fp:
+                    fp.write(str(_commands_dictionary))
+                
+
+                if self.valid_sources(_outputs):
+                    self.run_commands(_commands_dictionary)
+                else:
+                    self.console.log_list(
+                    [['Something went wrong, check for the following errors:', "standar"],
+                    ['<img src="./CGAgnostics/icons/x_XS.png"></img> - Your sources files path doesn\'t exists or is invalid.', "error"]])
             else:
                 self.console.log_list(
-                    [['<img src="./icons/warning_XS.png"></img> - Set your destination path first.', "warning"]])
+                    [['Something went wrong, check for the following errors:', "standar"],
+                    ['<img src="./CGAgnostics/icons/x_XS.png"></img> - Your destination path doesn\'t exists.', "error"]])
 
         self._export_BTN.clicked.connect(transcode)
 
@@ -133,13 +140,14 @@ class Transcoding(agUI.ToolkitQDialog):
         result = {"enable": False}
 
         def _create(setup):
-            if setup["enable"] and not os.path.exists(setup["path"]):
-                os.makedirs(setup["path"])
+            path = setup["path"].replace('"', "")
+            if setup["enable"] and not os.path.exists(path):
+                os.makedirs(path)
                 messages.append(
-                    [f'<img src="./icons/check_XS.png"></img> - {config["name"]}: {setup["name"]} directory created.', "success"])
+                    [f'<img src="./CGAgnostics/icons/check_XS.png"></img> - {config["name"]}: {setup["name"]} directory created.', "success"])
             else:
                 messages.append(
-                    [f'<img src="./icons/check_XS.png"></img> - {config["name"]}: {setup["name"]} directory exists.', "success"])
+                    [f'<img src="./CGAgnostics/icons/check_XS.png"></img> - {config["name"]}: {setup["name"]} directory exists.', "success"])
 
         if config['enable']:
             _images = {
@@ -177,9 +185,32 @@ class Transcoding(agUI.ToolkitQDialog):
             result["enable"] = True
         else:
             messages.append(
-                [f'<img src="./icons/warning_XS.png"></img> - {config["name"]}: Directories were not created due missing information.', "warning"])
+                [f'<img src="./CGAgnostics/icons/warning_XS.png"></img> - {config["name"]}: Directories were not created due missing information.', "warning"])
 
         return result
+
+    def run_commands(self, list_of_commands_dict):
+        result = []
+        for command_config in list_of_commands_dict:
+            for command in command_config.values():
+                if command["valid"]:
+                    if command["mode"] == "ffmpeg":
+                        result = subprocess.run(command["composed"], stdout=True, text=True)
+                        self.console.log(result)
+                    elif command["mode"] == "copy":
+                        shutil.copyfile(command["composed"][0], command["composed"][1])
+                else:
+                    pass
+
+        return result
+
+    def valid_sources(self, outputs):
+        for output in outputs:
+            if not os.path.isfile(output.source):
+                return False
+        return True
+        
+        
 
 
 if __name__ == "__main__":

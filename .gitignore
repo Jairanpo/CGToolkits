@@ -10,3 +10,5 @@ build
 conda-env
 
 transcoding/ffmpeg
+
+__pycache__

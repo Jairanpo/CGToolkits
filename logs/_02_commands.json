@@ -1,0 +1,52 @@
+[
+    {
+        "4444": {
+            "command": "C:\\Projects\\CGToolkits\\transcoding\\ffmpeg\\bin\\ffmpeg.exe -y -framerate 24 -i C:/Users/Ool E01/Documents/Playblast/Everest/EVE030.mov -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2, format=yuv420p\" -c:v prores_ks -profile:v 4444 -crf 21 -preset \"medium\" C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 01\\UNCOMPRESS\\TEST_MASTER_4444.mov",
+            "message": [
+                "4444 command was created",
+                "success"
+            ],
+            "valid": true
+        },
+        "H264": {
+            "command": "C:\\Projects\\CGToolkits\\transcoding\\ffmpeg\\bin\\ffmpeg.exe -y -framerate 24 -i C:/Users/Ool E01/Documents/Playblast/Everest/EVE030.mov -c:v libx264 -crf 21 -preset \"medium\" C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 01\\UNCOMPRESS\\TEST_MASTER_H264.mov",
+            "message": [
+                "H264 command was created",
+                "success"
+            ],
+            "valid": true
+        },
+        "HD": {
+            "command": "copy C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 01\\UNCOMPRESS\\TEST_MASTER_H264.mov C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 01\\HD\\TEST_MASTER_HD.mov",
+            "message": [
+                "HD command was created",
+                "success"
+            ],
+            "valid": true
+        },
+        "PNG": {
+            "command": "C:\\Projects\\CGToolkits\\transcoding\\ffmpeg\\bin\\ffmpeg.exe -y -i C:/Users/Ool E01/Documents/Playblast/Everest/EVE030.mov C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 03\\IMAGE_SEQUENCE\\TEST_MASTER_%04d.png",
+            "message": [
+                "ffmpeg command created succesfully for TEST_MASTER_%04d.png",
+                "success"
+            ],
+            "valid": true
+        },
+        "QT": {
+            "command": "copy C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 01\\UNCOMPRESS\\TEST_MASTER_H264.mov C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 01\\QT\\TEST_MASTER_QT.mov",
+            "message": [
+                "QT command was created",
+                "success"
+            ],
+            "valid": true
+        },
+        "UNCOMPRESS": {
+            "command": "C:\\Projects\\CGToolkits\\transcoding\\ffmpeg\\bin\\ffmpeg.exe -y -framerate 24 -i C:/Users/Ool E01/Documents/Playblast/Everest/EVE030.mov -c:v libx264 -crf 21 -preset \"ultrafast\" C:\\Users\\Ool E01\\Desktop\\UserData\\R&D\\Carpeta 01\\UNCOMPRESS\\TEST_MASTER_UNCOMPRESS.mov",
+            "message": [
+                "UNCOMPRESS command was created",
+                "success"
+            ],
+            "valid": true
+        }
+    }
+]

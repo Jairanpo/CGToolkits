@@ -1,3 +1,0 @@
-'''
-    Base repository for toolkits 
-'''

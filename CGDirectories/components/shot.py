@@ -74,10 +74,12 @@ class Shot(DirectoryWidget):
                     self.console.log('That shot already exists', "error")
             else:
                 self.console.log('''
-                                Unable to create shot...
-                                check the following issues:
-                                    - The specified shots path doesn't exists.
-                                    - The shot code field is incorrect.
+                                <p>Unable to create shot</p>
+                                <p>check the following issues:<p>
+                                <ul>
+                                    <li>The specified shots path doesn't exists.</li>
+                                    <li>The shot code field is incorrect.</li>
+                                </ul>
                                 ''', "error")
 
         self.create_button.clicked.connect(create_shot)
