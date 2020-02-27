@@ -195,6 +195,8 @@ class Transcoding(agUI.ToolkitQDialog):
             for command in command_config.values():
                 if command["valid"]:
                     if command["mode"] == "ffmpeg":
+                        #_QProcess = QtCore.QProcess()
+                        #_QProcess.start(command["composed"][0], command["composed"][1:])
                         result = subprocess.run(command["composed"], stdout=True, text=True)
                         self.console.log(result)
                     elif command["mode"] == "copy":
@@ -211,8 +213,6 @@ class Transcoding(agUI.ToolkitQDialog):
         return True
         
         
-
-
 if __name__ == "__main__":
     app = QtWidgets.QApplication()
     window = Transcoding()

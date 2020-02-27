@@ -5,7 +5,7 @@ agnostics_dir = os.path.join(os.getcwd(), "CGAgnostics")
 icons_dir = os.path.join(os.getcwd(), 'transcoding', "toolkit", "icons")
 
 a = Analysis([os.path.join(os.getcwd(), "transcoding", "toolkit", "__init__.py")],
-             pathex=[os.getcwd()],
+             pathex=['C://Projects//CGToolkits//'],
              binaries=[],
              datas=[
                  ('./transcoding/ffmpeg', 'ffmpeg'),
