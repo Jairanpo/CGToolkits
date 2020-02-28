@@ -26,7 +26,7 @@ class Project(DirectoryWidget):
             <h2>Instructions:</h2>
             <ul>
                 <li>Set the path where you would like your directory to be created.</li>
-                <li>Provide the number of the sequence you would like to create, it should be unique to the others projects in the path.</li>
+                <li>Provide the number of the sequence you would like to create, it <br>should be unique to the others projects in the path.</li>
                 <li>Use pascal case to name your project: "NewYearsEve", "MyProjectName", "FooBarBaz".</li>
             </ul>
         '''

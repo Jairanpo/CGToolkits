@@ -35,8 +35,8 @@ class Campaign(DirectoryWidget):
                 <li>Set the path where you would like your directory to be created.</li>
                 <li>Specify the campaign naming fields without using spaces.</li>
                 <li>year:"2020", prefix:"foo", name: "bar", suffix: "baz" -> Will be turned into "2020_FooBarBaz".</li>
-                <li>Use a descriptive set of three characters that will help you to identify the relation between campaign/project name and shots.</li>
-                <li>If you don't know the amount of shots each project should have, set the amount to a slightly larger quantity (the remainder could be deleted later).</li>
+                <li>Use a descriptive set of three characters that will help you to identify the <br>relation between campaign/project name and shots.</li>
+                <li>If you don't know the amount of shots each project should have, set the amount <br>to a slightly larger quantity (the remainder could be deleted later).</li>
             </ul>
         '''
         self._has_subprojects_CBX = agUI.ToolkitQCheckBox(

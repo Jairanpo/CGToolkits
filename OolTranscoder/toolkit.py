@@ -19,13 +19,15 @@ if not os.path.exists(_logs_dir):
 
 
 __version__ = "1.0.0"
+_NAME = "OolTranscoder"
+__author__ = "Jair Anguiano"
 
 
 class Transcoding(agUI.ToolkitQDialog):
     def __init__(self):
         super().__init__(parent=None)
 
-        self.setWindowTitle(f"Transcoding | {__version__}")
+        self.setWindowTitle(f"{_NAME} | {__version__}")
         self._main_path = self.execution_path().replace(
             "CGAgnostics\GUI", "")
         self._icons_path = os.path.join(self._main_path, 'icons')
@@ -41,10 +43,6 @@ class Transcoding(agUI.ToolkitQDialog):
         self._methods()
 
     def _widgets(self):
-        self._title = agUI.ToolkitQLabel("<h3>Transcoding Toolkit:</h3>")
-        self._title.setStyleSheet("color:rgb(200,150,70)")
-        self._title.setMaximumHeight(20)
-
         self._H_splitter_SPL = agUI.ToolkitQSplitter()
         self._H_splitter_SPL.setOrientation(QtCore.Qt.Horizontal)
         self._V_splitter_SPL = agUI.ToolkitQSplitter()
@@ -78,7 +76,6 @@ class Transcoding(agUI.ToolkitQDialog):
         self._V_splitter_SPL.addWidget(self.intergeneric.widget)
         self._V_splitter_SPL.addWidget(self._export_WGT)
 
-        _V_LYT.addWidget(self._title)
         self._H_splitter_SPL.addWidget(self._V_splitter_SPL)
         self._H_splitter_SPL.addWidget(self.console.widget)
         _V_LYT.addWidget(self._H_splitter_SPL)

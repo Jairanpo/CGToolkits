@@ -28,8 +28,10 @@ class Asset(DirectoryWidget):
                 <ul>
                     <li>Set the path where you would like your directory to be created.</li>
                     <li>Specify the asset name using spaces, for example: "dr slump".</li>
-                    <li>Spaces between words will be use to concatenate and capitalize a word, for example: "dr slump" -> "DrSlump".</li>
-                    <li>Spaces at the beginning and at the end of a word will be eliminated, for example: " dr slump  " -> "DrSlump".</li>
+                    <li>Spaces between words will be use to concatenate and capitalize <br>
+                    a word, for example: "dr slump" -> "DrSlump".</li>
+                    <li>Spaces at the beginning and at the end of a word will be eliminated,<br> 
+                    for example: " dr slump  " -> "DrSlump".</li>
                 </ul>
             '''
 

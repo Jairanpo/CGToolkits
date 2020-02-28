@@ -2,14 +2,15 @@
 block_cipher = None
 
 agnostics_dir = os.path.join(os.getcwd(), "CGAgnostics")
-icons_dir = os.path.join(os.getcwd(), 'transcoding', "toolkit", "icons")
+icons_dir = os.path.join(os.getcwd(), "icons")
 
-a = Analysis([os.path.join(os.getcwd(), "transcoding", "toolkit", "__init__.py")],
-             pathex=['C://Projects//CGToolkits//'],
+a = Analysis(["toolkit.py"],
+             pathex=['C://Projects//CGToolkits//OolTranscoder'],
              binaries=[],
              datas=[
-                 ('./transcoding/ffmpeg', 'ffmpeg'),
-                 (icons_dir, 'icons')
+                 ('./ffmpeg', 'ffmpeg'),
+                 (icons_dir, 'icons'),
+                 (os.path.join(agnostics_dir, "icons"), "CGAgnostics/icons")
                  ],
              hiddenimports=[],
              hookspath=[],
@@ -25,12 +26,13 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='transcoding',
+          name='OolTranscoder',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=True )
+          console=True,
+          icon='icons\\video.ico')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
@@ -38,4 +40,4 @@ coll = COLLECT(exe,
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='transcoding')
+               name='OolTranscoder')

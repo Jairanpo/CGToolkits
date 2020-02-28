@@ -13,6 +13,7 @@ from components.shot import Shot
 
 __author__ = "Jair Anguiano"
 __version__ = "4.2.0"
+_NAME = "CGDirectories"
 
 
 class DirectoriesGUI(agUI.ToolkitQDialog):
@@ -35,10 +36,10 @@ class DirectoriesGUI(agUI.ToolkitQDialog):
         self.setWindowFlags(self.windowFlags() ^
                             QtCore.Qt.WindowContextHelpButtonHint)
         self.setWindowIcon(self._window_icon)
-        self.setWindowTitle(f'Directories | v{__version__}')
-        self.setMinimumWidth(200)
+        self.setWindowTitle(f'{_NAME} | v{__version__}')
+        self.setMinimumWidth(300)
         self.setMinimumHeight(300)
-        self.resize(700, 700)
+        self.resize(700, 800)
 
         self.list_of_sequence_widgets = []
 

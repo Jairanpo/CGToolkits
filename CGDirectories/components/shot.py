@@ -24,9 +24,11 @@ class Shot(DirectoryWidget):
             <h2>Instructions:</h2>
             <ul>
                 <li>Set the path where you would like your directory to be created.</li>
-                <li>The three characters should help to identify the shot, for example, if the project is named "NewYearsEve", the 
-                three characters should be "NYE", "N" for "New", "Y" for "Years" and "E" for "Eve".</li>
-                <li>The number you set will be padded using a three digits nomenclature, for example: 1 will be turned into 010, 20 will be turned into 200".</li>
+                <li>The three characters should help to identify the shot, for example, <br>
+                if the project is named "NewYearsEve", the three characters should be <br>
+                "NYE", "N" for "New", "Y" for "Years" and "E" for "Eve".</li>
+                <li>The number you set will be padded using a three digits nomenclature, <br>
+                for example: 1 will be turned into 010, 20 will be turned into 200".</li>
             </ul>
         '''
         self.shot_code_LBL = agUI.ToolkitQLabel(
