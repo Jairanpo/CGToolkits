@@ -10,7 +10,6 @@ import pymel.core as pm
 import maya.mel as mel
 
 # Local application imports
-import cache.alembic.toolkit as abcToolkit
 import CGAgnostics.GUI as agUI
 import previs.createShot.simpleCameraRig as simpleCameraRig
 import previs.createShot.sequencerShot as sequencerShot
@@ -19,8 +18,12 @@ import previs.camOps as camOps
 import previs.moveShots as moveShots
 import previs.playblast as playblast
 import previs.panels as panels
+import previs.components.playblast as pbs
+reload(pbs)
+reload(agUI)
 
-__version__ = '3.1.0'
+
+__version__ = '3.2.0'
 _NAME = "Previs Toolkit"
 
 
@@ -58,6 +61,15 @@ class GUI(agUI.ToolkitQDialog):
         self._icons_path = os.path.join(self._root_path, 'icons')
         self._cam_icon = QtGui.QIcon(os.path.join(
             self._icons_path, "video-camera.ico"))
+
+        self.XS_icons = {}
+        self.XS_icons["error"] = os.path.dirname(__file__).replace('previs', 'CGAgnostics')
+        self.XS_icons["error"] = os.path.join(self.XS_icons["error"], 'icons', 'x_XS.png')
+        self.XS_icons["success"] = os.path.dirname(__file__).replace('previs', 'CGAgnostics')
+        self.XS_icons["success"] = os.path.join(self.XS_icons["success"], 'icons', 'check_XS.png')
+        self.XS_icons["warning"] = os.path.dirname(__file__).replace('previs', 'CGAgnostics')
+        self.XS_icons["warning"] = os.path.join(self.XS_icons["warning"], 'icons', 'warning_XS.png')
+
         self.setWindowIcon(self._cam_icon)
         self.setMinimumWidth(600)
         self.setMaximumWidth(1200)
@@ -95,14 +107,18 @@ class GUI(agUI.ToolkitQDialog):
         def _widgets():
             self.previs_TAB = agUI.ToolkitQTab()
 
-            self.work_tab_WGT = QtWidgets.QWidget()
+            self.shots_tab_WGT = QtWidgets.QWidget()
 
-            self.previs_TAB.addTab(self.work_tab_WGT, "Work")
+            self._playblast = pbs.Playblast(self)
+            self.playblast_tab_WGT = self._playblast.widget
+
+            self.previs_TAB.addTab(self.shots_tab_WGT, "Shots")
+            self.previs_TAB.addTab(self.playblast_tab_WGT, "Playblast")
 
         def _layouts():
             _H_LYT = QtWidgets.QHBoxLayout()
             self.work_tab_LYT = QtWidgets.QVBoxLayout()
-            self.work_tab_WGT.setLayout(self.work_tab_LYT)
+            self.shots_tab_WGT.setLayout(self.work_tab_LYT)
 
             _H_LYT.addWidget(self.previs_TAB)
             self.H_root_tab_LYT = _H_LYT
@@ -183,20 +199,20 @@ class GUI(agUI.ToolkitQDialog):
                 search_for_shot = pm.ls('*{}*'.format(self._SHOT_DATA['shot']))
 
                 if len(search_for_shot) != 0 or len(self._SHOT_DATA["shot"]) == 0:
-                    self.console.log('''
-                                    Check for one of the following errors:
-                                        - That shot has been already created.
-                                        - Clear the scene from any node that has the name of your shot.
-                                        - You didn't provide a valid sequence name.
-                                        - You didn't provide a valid and distinctive shot name.
-                                    ''', "error")
+                    
+                    self.console.log_list([
+                                    ["<p>Check for one of the following errors:</p>".format(self.XS_icons["error"]), "standar"],
+                                    ['<img src="{0}"></img> - That shot has been already created before.'.format(self.XS_icons["error"]), "error"],   
+                                    ['<img src="{0}"></img> - Clear the scene from any node that has the name of your shot.'.format(self.XS_icons["error"]),"error"], 
+                                    ['<img src="{0}"></img> - You didn\'t provide a valid sequence name.'.format(self.XS_icons["error"]), "error"],
+                                    ['<img src="{0}"></img> - You didn\'t provide a valid and distinctive shot name.'.format(self.XS_icons["error"]), "error"]])
 
                 elif len(self._SHOT_DATA["shot"]) != 6:
-                    self.console.log(
-                        "Your shotcode has to contain 3 characters and 3 digits", "error")
+                    self.console.log_list([['<img src="{0}"></img> - Your shotcode has to contain 3 characters and 3 digits.'.format(self.XS_icons["error"]), "error"]])
+                elif self._SHOT_DATA["end"] == '' or self._SHOT_DATA["start"] == '':
+                    self.console.log_list([['<img src="{0}"></img> - Empty start or end frame, please provide range.'.format(self.XS_icons["error"]), "error"]])
                 elif int(self._SHOT_DATA["end"]) <= int(self._SHOT_DATA["start"]):
-                    self.console.log(
-                        "Your end frame cannot be lower or equal to your start frame.", "error")
+                    self.console.log_list([['<img src="{0}"></img> - Your end frame cannot be lower or equal to your start frame.'.format(self.XS_icons["error"]), "error"]])
                 else:
                     self._SHOT_DATA['shot'] = self._SHOT_DATA['shot'].upper()
                     self._SHOT_DATA['start'] = int(self._SHOT_DATA['start'])
@@ -329,7 +345,7 @@ class GUI(agUI.ToolkitQDialog):
         self.H_right_LYT = None
 
         def _widgets():
-            self._playblast_GRP = agUI.ToolkitQGroupBox('Playblast by:')
+            self._playblast_GRP = agUI.ToolkitQGroupBox('Quick playblast:')
             self._playblast_sequence_BTN = agUI.ToolkitQPushButton(
                 'Sequence', '')
             self._playblast_shot_BTN = agUI.ToolkitQPushButton('Shot', '')
@@ -444,7 +460,7 @@ class GUI(agUI.ToolkitQDialog):
 
         def _layouts():
             _H_LYT = QtWidgets.QHBoxLayout()
-            _H_LYT.addWidget(self.console.get_widget())
+            _H_LYT.addWidget(self.console.widget)
 
             self.H_root_console_LYT = _H_LYT
             self.V_root_window_LYT.addLayout(self.H_root_console_LYT)
@@ -460,7 +476,7 @@ class GUI(agUI.ToolkitQDialog):
 
         def _layouts():
             _H_LYT = QtWidgets.QHBoxLayout()
-            _H_LYT.addLayout(self._footer_WGT.getLayout())
+            _H_LYT.addLayout(self._footer_WGT.layout)
 
             self.H_root_footer_LYT = _H_LYT
             self.V_root_window_LYT.addLayout(self.H_root_footer_LYT)
