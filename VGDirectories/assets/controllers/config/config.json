@@ -1,0 +1,65 @@
+{
+  "steps": {
+    "art": {
+      "number": 1,
+      "name": "Artwork",
+      "children": [],
+      "workarea": true
+    },
+    "modeling": {
+      "number": 2,
+      "name": "Modeling",
+      "children": [],
+      "workarea": true
+    },
+    "rigging": {
+      "number": 3,
+      "name": "Rigging",
+      "children": [],
+      "workarea": true
+    },
+    "lookdev": {
+      "number": 4,
+      "name": "LookDev",
+      "children": [
+        "Workarea",
+        "Workarea/Scenes",
+        "Workarea/Shaders",
+        "Workarea/Photoshop",
+        "Workarea/Illustrator",
+        "Workarea/Textures",
+        "Workarea/Sources",
+        "Workarea/References"
+      ],
+      "workarea": false
+    },
+    "vfx": {
+      "number": 5,
+      "name": "VFX",
+      "children": [
+        "Houdini",
+        "Maya",
+        "Cinema4D",
+        "Shared",
+        "Shared/Alembic",
+        "Shared/Obj",
+        "Shared/FBX"
+      ],
+      "workarea": false
+    },
+    "cache": {
+      "number": 6,
+      "name": "Unity",
+      "children": [
+        "Alembic",
+        "Alembic/AssetName_v001.abc",
+        "Alembic/AssetName_v002.abc",
+        "Textures",
+        "Textures/AssetName_Name_v001.psd",
+        "Textures/AssetName_Name_v001.png",
+        "Textures/AssetName_Name_v002.png"
+      ],
+      "workarea": false
+    }
+  }
+}

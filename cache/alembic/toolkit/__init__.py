@@ -504,7 +504,7 @@ class GUI(agUI.ToolkitQDialog):
 
         def _layouts():
             _H_LYT = QtWidgets.QHBoxLayout()
-            _H_LYT.addWidget(self.console.get_widget())
+            _H_LYT.addWidget(self.console.widget)
 
             self.root_console_LYT = _H_LYT
 

@@ -1,0 +1,21 @@
+1. Copy the following lines into Maya.
+2. Change the path to the path where your script is stored.
+3. Change the [module] for the name of the toolkit you want to execute.
+
+
+import sys
+import os
+
+path = 'path\\to\\CGToolkits'
+
+if path in sys.path:
+    pass
+else:
+    print('Envar variable added')
+    sys.path.append(path)
+
+# ___________________________     Execution     ___________________________________
+
+import [module].toolkit as [module]TK
+
+[module]TK.GUI.show_dialog()
