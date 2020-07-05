@@ -19,8 +19,6 @@ import previs.moveShots as moveShots
 import previs.playblast as playblast
 import previs.panels as panels
 import previs.components.playblast as pbs
-reload(pbs)
-reload(agUI)
 
 
 __version__ = '3.2.0'
@@ -35,7 +33,7 @@ def maya_main_window():
     return wrapInstance(long(main_window_ptr), QtWidgets.QWidget)
 
 
-class GUI(agUI.ToolkitQDialog):
+class GUI(object):
     GUI_instance = None
     _SHOT_DATA = {"project": None, "shot": None, "start": None, "end": None}
 
@@ -50,7 +48,7 @@ class GUI(agUI.ToolkitQDialog):
             cls.GUI_instance.raise_()
             cls.GUI_instance.activateWindow()
 
-    def __init__(self, parent=maya_main_window()):
+    def __init__(self, parent):
         # Call the super function with class and current instance(self)
         super(GUI, self).__init__(parent)
         self.setWindowTitle('{0} | {1}'.format(_NAME, __version__))
@@ -63,12 +61,18 @@ class GUI(agUI.ToolkitQDialog):
             self._icons_path, "video-camera.ico"))
 
         self.XS_icons = {}
-        self.XS_icons["error"] = os.path.dirname(__file__).replace('previs', 'CGAgnostics')
-        self.XS_icons["error"] = os.path.join(self.XS_icons["error"], 'icons', 'x_XS.png')
-        self.XS_icons["success"] = os.path.dirname(__file__).replace('previs', 'CGAgnostics')
-        self.XS_icons["success"] = os.path.join(self.XS_icons["success"], 'icons', 'check_XS.png')
-        self.XS_icons["warning"] = os.path.dirname(__file__).replace('previs', 'CGAgnostics')
-        self.XS_icons["warning"] = os.path.join(self.XS_icons["warning"], 'icons', 'warning_XS.png')
+        self.XS_icons["error"] = os.path.dirname(
+            __file__).replace('previs', 'CGAgnostics')
+        self.XS_icons["error"] = os.path.join(
+            self.XS_icons["error"], 'icons', 'x_XS.png')
+        self.XS_icons["success"] = os.path.dirname(
+            __file__).replace('previs', 'CGAgnostics')
+        self.XS_icons["success"] = os.path.join(
+            self.XS_icons["success"], 'icons', 'check_XS.png')
+        self.XS_icons["warning"] = os.path.dirname(
+            __file__).replace('previs', 'CGAgnostics')
+        self.XS_icons["warning"] = os.path.join(
+            self.XS_icons["warning"], 'icons', 'warning_XS.png')
 
         self.setWindowIcon(self._cam_icon)
         self.setMinimumWidth(600)
@@ -199,20 +203,27 @@ class GUI(agUI.ToolkitQDialog):
                 search_for_shot = pm.ls('*{}*'.format(self._SHOT_DATA['shot']))
 
                 if len(search_for_shot) != 0 or len(self._SHOT_DATA["shot"]) == 0:
-                    
+
                     self.console.log_list([
-                                    ["<p>Check for one of the following errors:</p>".format(self.XS_icons["error"]), "standar"],
-                                    ['<img src="{0}"></img> - That shot has been already created before.'.format(self.XS_icons["error"]), "error"],   
-                                    ['<img src="{0}"></img> - Clear the scene from any node that has the name of your shot.'.format(self.XS_icons["error"]),"error"], 
-                                    ['<img src="{0}"></img> - You didn\'t provide a valid sequence name.'.format(self.XS_icons["error"]), "error"],
-                                    ['<img src="{0}"></img> - You didn\'t provide a valid and distinctive shot name.'.format(self.XS_icons["error"]), "error"]])
+                        ["<p>Check for one of the following errors:</p>".format(
+                            self.XS_icons["error"]), "standar"],
+                        ['<img src="{0}"></img> - That shot has been already created before.'.format(
+                            self.XS_icons["error"]), "error"],
+                        ['<img src="{0}"></img> - Clear the scene from any node that has the name of your shot.'.format(
+                            self.XS_icons["error"]), "error"],
+                        ['<img src="{0}"></img> - You didn\'t provide a valid sequence name.'.format(
+                            self.XS_icons["error"]), "error"],
+                        ['<img src="{0}"></img> - You didn\'t provide a valid and distinctive shot name.'.format(self.XS_icons["error"]), "error"]])
 
                 elif len(self._SHOT_DATA["shot"]) != 6:
-                    self.console.log_list([['<img src="{0}"></img> - Your shotcode has to contain 3 characters and 3 digits.'.format(self.XS_icons["error"]), "error"]])
+                    self.console.log_list(
+                        [['<img src="{0}"></img> - Your shotcode has to contain 3 characters and 3 digits.'.format(self.XS_icons["error"]), "error"]])
                 elif self._SHOT_DATA["end"] == '' or self._SHOT_DATA["start"] == '':
-                    self.console.log_list([['<img src="{0}"></img> - Empty start or end frame, please provide range.'.format(self.XS_icons["error"]), "error"]])
+                    self.console.log_list(
+                        [['<img src="{0}"></img> - Empty start or end frame, please provide range.'.format(self.XS_icons["error"]), "error"]])
                 elif int(self._SHOT_DATA["end"]) <= int(self._SHOT_DATA["start"]):
-                    self.console.log_list([['<img src="{0}"></img> - Your end frame cannot be lower or equal to your start frame.'.format(self.XS_icons["error"]), "error"]])
+                    self.console.log_list(
+                        [['<img src="{0}"></img> - Your end frame cannot be lower or equal to your start frame.'.format(self.XS_icons["error"]), "error"]])
                 else:
                     self._SHOT_DATA['shot'] = self._SHOT_DATA['shot'].upper()
                     self._SHOT_DATA['start'] = int(self._SHOT_DATA['start'])

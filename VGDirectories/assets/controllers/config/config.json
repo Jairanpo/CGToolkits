@@ -9,7 +9,9 @@
     "modeling": {
       "number": 2,
       "name": "Modeling",
-      "children": [],
+      "children": [
+        "UVs"
+      ],
       "workarea": false
     },
     "rigging": {
@@ -29,7 +31,8 @@
         "Textures",
         "Sources",
         "References",
-        "UVs"
+        "UVs",
+        "Turntable"
       ],
       "workarea": false
     },
@@ -51,6 +54,7 @@
         "Sprites",
         "Prefabs",
         "Textures",
+        "Models",
         "Audio",
         "Materials"
       ],
